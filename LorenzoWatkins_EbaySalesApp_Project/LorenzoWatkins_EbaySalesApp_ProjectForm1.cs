@@ -58,23 +58,18 @@ namespace LorenzoWatkins_EbaySalesApp_Project
 
             salePrice = parsedPrice; // store parsed numeric input in variable
 
-            // --- Interim calculations (all stored in variables) ---
-            decimal ebayCommissionRate = 0.129m; // 12.9% example eBay fee
-            decimal salesTaxRate = 0.07m; // 7% sales tax example
+            // Create an EbayItem object (requirement: create object in the form code)
+            EbayItem item = new EbayItem(itemTitle, itemCondition, salePrice);
 
-            decimal commissionAmount = salePrice * ebayCommissionRate;
-            decimal salesTaxAmount = salePrice * salesTaxRate;
-            decimal netRevenue = salePrice - commissionAmount - salesTaxAmount;
-
-            // Some additional calculation: apply a promotional discount of 5% if condition is "New"
-            decimal promoDiscountRate = 0m;
-            if (!string.IsNullOrWhiteSpace(itemCondition) && itemCondition.Trim().Equals("New", StringComparison.OrdinalIgnoreCase))
-            {
-                promoDiscountRate = 0.05m; // 5% promo
-            }
-
-            decimal promoDiscountAmount = salePrice * promoDiscountRate;
-            decimal revenueAfterDiscount = netRevenue - promoDiscountAmount;
+            // Use the class's methods and properties for all interim calculations
+            decimal ebayCommissionRate = item.CommissionRate;
+            decimal salesTaxRate = item.SalesTaxRate;
+            decimal commissionAmount = item.GetCommissionAmount();
+            decimal salesTaxAmount = item.GetSalesTaxAmount();
+            decimal netRevenue = item.GetNetRevenue();
+            decimal promoDiscountRate = item.PromoDiscountRate;
+            decimal promoDiscountAmount = item.GetPromoDiscountAmount();
+            decimal revenueAfterDiscount = item.GetRevenueAfterDiscount();
 
             // --- Output: display all input, interim, and output data in ListBox ---
             listBoxOutput.Items.Clear();
@@ -96,6 +91,11 @@ namespace LorenzoWatkins_EbaySalesApp_Project
 
             // Also show a numeric as a number formatted (Number format)
             listBoxOutput.Items.Add("Commission amount (number format): " + commissionAmount.ToString("N2", CultureInfo.CurrentCulture));
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

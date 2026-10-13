@@ -35,78 +35,103 @@
 
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.textBoxTitle = new System.Windows.Forms.TextBox();
-            this.textBoxPrice = new System.Windows.Forms.TextBox();
-            this.textBoxCondition = new System.Windows.Forms.TextBox();
-            this.buttonCalculate = new System.Windows.Forms.Button();
-            this.listBoxOutput = new System.Windows.Forms.ListBox();
+            textBoxTitle = new TextBox();
+            textBoxPrice = new TextBox();
+            textBoxCondition = new TextBox();
+            buttonCalculate = new Button();
+            listBoxOutput = new ListBox();
+            button1 = new Button();
+            button2 = new Button();
             SuspendLayout();
             // 
             // textBoxTitle
             // 
-            this.textBoxTitle.Location = new System.Drawing.Point(20, 20);
-            this.textBoxTitle.Name = "textBoxTitle";
-            this.textBoxTitle.Size = new System.Drawing.Size(300, 23);
-            this.textBoxTitle.TabIndex = 0;
-            this.textBoxTitle.PlaceholderText = "Enter item title";
-            this.textBoxTitle.GotFocus += new System.EventHandler(this.textBox_GotFocus);
-            this.textBoxTitle.LostFocus += new System.EventHandler(this.textBox_LostFocus);
-            // 
-            // textBoxCondition
-            // 
-            this.textBoxCondition.Location = new System.Drawing.Point(20, 55);
-            this.textBoxCondition.Name = "textBoxCondition";
-            this.textBoxCondition.Size = new System.Drawing.Size(300, 23);
-            this.textBoxCondition.TabIndex = 1;
-            this.textBoxCondition.PlaceholderText = "Enter condition (e.g., New, Used)";
-            this.textBoxCondition.GotFocus += new System.EventHandler(this.textBox_GotFocus);
-            this.textBoxCondition.LostFocus += new System.EventHandler(this.textBox_LostFocus);
+            textBoxTitle.Location = new Point(20, 20);
+            textBoxTitle.Name = "textBoxTitle";
+            textBoxTitle.PlaceholderText = "Enter item title";
+            textBoxTitle.Size = new Size(300, 23);
+            textBoxTitle.TabIndex = 0;
+            textBoxTitle.GotFocus += textBox_GotFocus;
+            textBoxTitle.LostFocus += textBox_LostFocus;
             // 
             // textBoxPrice
             // 
-            this.textBoxPrice.Location = new System.Drawing.Point(20, 90);
-            this.textBoxPrice.Name = "textBoxPrice";
-            this.textBoxPrice.Size = new System.Drawing.Size(150, 23);
-            this.textBoxPrice.TabIndex = 2;
-            this.textBoxPrice.PlaceholderText = "Enter sale price";
-            this.textBoxPrice.GotFocus += new System.EventHandler(this.textBox_GotFocus);
-            this.textBoxPrice.LostFocus += new System.EventHandler(this.textBox_LostFocus);
+            textBoxPrice.Location = new Point(20, 90);
+            textBoxPrice.Name = "textBoxPrice";
+            textBoxPrice.PlaceholderText = "Enter sale price";
+            textBoxPrice.Size = new Size(150, 23);
+            textBoxPrice.TabIndex = 2;
+            textBoxPrice.GotFocus += textBox_GotFocus;
+            textBoxPrice.LostFocus += textBox_LostFocus;
+            // 
+            // textBoxCondition
+            // 
+            textBoxCondition.Location = new Point(20, 55);
+            textBoxCondition.Name = "textBoxCondition";
+            textBoxCondition.PlaceholderText = "Enter condition (e.g., New, Used)";
+            textBoxCondition.Size = new Size(300, 23);
+            textBoxCondition.TabIndex = 1;
+            textBoxCondition.GotFocus += textBox_GotFocus;
+            textBoxCondition.LostFocus += textBox_LostFocus;
             // 
             // buttonCalculate
             // 
-            this.buttonCalculate.Location = new System.Drawing.Point(20, 125);
-            this.buttonCalculate.Name = "buttonCalculate";
-            this.buttonCalculate.Size = new System.Drawing.Size(120, 30);
-            this.buttonCalculate.TabIndex = 3;
-            this.buttonCalculate.Text = "Calculate Fees";
-            this.buttonCalculate.UseVisualStyleBackColor = true;
-            this.buttonCalculate.Click += new System.EventHandler(this.buttonCalculate_Click);
+            buttonCalculate.Location = new Point(20, 125);
+            buttonCalculate.Name = "buttonCalculate";
+            buttonCalculate.Size = new Size(120, 30);
+            buttonCalculate.TabIndex = 3;
+            buttonCalculate.Text = "Calculate Fees";
+            buttonCalculate.UseVisualStyleBackColor = true;
+            buttonCalculate.Click += buttonCalculate_Click;
             // 
             // listBoxOutput
             // 
-            this.listBoxOutput.FormattingEnabled = true;
-            this.listBoxOutput.ItemHeight = 15;
-            this.listBoxOutput.Location = new System.Drawing.Point(20, 170);
-            this.listBoxOutput.Name = "listBoxOutput";
-            this.listBoxOutput.Size = new System.Drawing.Size(540, 214);
-            this.listBoxOutput.TabIndex = 4;
+            listBoxOutput.FormattingEnabled = true;
+            listBoxOutput.Location = new Point(20, 170);
+            listBoxOutput.Name = "listBoxOutput";
+            listBoxOutput.Size = new Size(540, 214);
+            listBoxOutput.TabIndex = 4;
             // 
-            // Form1
+            // button1
             // 
+            button1.Location = new Point(245, 129);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 5;
+            button1.Text = "Clear";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(452, 129);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 6;
+            button2.Text = "Quit";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // LorenzoWatkins_EbaySalesApp_ProjectForm1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(600, 400);
-            Controls.Add(this.textBoxTitle);
-            Controls.Add(this.textBoxCondition);
-            Controls.Add(this.textBoxPrice);
-            Controls.Add(this.buttonCalculate);
-            Controls.Add(this.listBoxOutput);
-            Name = "Form1";
+            ClientSize = new Size(600, 400);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(textBoxTitle);
+            Controls.Add(textBoxCondition);
+            Controls.Add(textBoxPrice);
+            Controls.Add(buttonCalculate);
+            Controls.Add(listBoxOutput);
+            Name = "LorenzoWatkins_EbaySalesApp_ProjectForm1";
             Text = "EbaySalesApp";
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
+
+        private Button button1;
+        private Button button2;
     }
 }
