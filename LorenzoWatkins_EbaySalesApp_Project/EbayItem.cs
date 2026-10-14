@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace LorenzoWatkins_EbaySalesApp_Project
 {
@@ -49,30 +50,44 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             }
         }
 
-        // Calculation methods
-        public decimal GetCommissionAmount()
+        // Calculated values stored as properties after Calculate() is called
+        public decimal CommissionAmount { get; private set; }
+        public decimal SalesTaxAmount { get; private set; }
+        public decimal NetRevenue { get; private set; }
+        public decimal PromoDiscountAmount { get; private set; }
+        public decimal RevenueAfterDiscount { get; private set; }
+
+        // Perform all calculations and populate the calculated properties
+        public void Calculate()
         {
-            return SalePrice * CommissionRate;
+            // Ensure promo rate matches condition
+            if (!string.IsNullOrWhiteSpace(Condition) && Condition.Trim().Equals("New", StringComparison.OrdinalIgnoreCase))
+            {
+                PromoDiscountRate = 0.05m;
+            }
+            else
+            {
+                PromoDiscountRate = 0m;
+            }
+
+            CommissionAmount = SalePrice * CommissionRate;
+            SalesTaxAmount = SalePrice * SalesTaxRate;
+            NetRevenue = SalePrice - CommissionAmount - SalesTaxAmount;
+            PromoDiscountAmount = SalePrice * PromoDiscountRate;
+            RevenueAfterDiscount = NetRevenue - PromoDiscountAmount;
         }
 
-        public decimal GetSalesTaxAmount()
-        {
-            return SalePrice * SalesTaxRate;
-        }
+        // Backwards-compatible helper methods (optional)
+        public decimal GetCommissionAmount() => CommissionAmount == 0m ? SalePrice * CommissionRate : CommissionAmount;
+        public decimal GetSalesTaxAmount() => SalesTaxAmount == 0m ? SalePrice * SalesTaxRate : SalesTaxAmount;
+        public decimal GetNetRevenue() => NetRevenue == 0m ? SalePrice - GetCommissionAmount() - GetSalesTaxAmount() : NetRevenue;
+        public decimal GetPromoDiscountAmount() => PromoDiscountAmount == 0m ? SalePrice * PromoDiscountRate : PromoDiscountAmount;
+        public decimal GetRevenueAfterDiscount() => RevenueAfterDiscount == 0m ? GetNetRevenue() - GetPromoDiscountAmount() : RevenueAfterDiscount;
 
-        public decimal GetNetRevenue()
+        // Provide a helpful string representation for the EbaySalesApp
+        public override string ToString()
         {
-            return SalePrice - GetCommissionAmount() - GetSalesTaxAmount();
-        }
-
-        public decimal GetPromoDiscountAmount()
-        {
-            return SalePrice * PromoDiscountRate;
-        }
-
-        public decimal GetRevenueAfterDiscount()
-        {
-            return GetNetRevenue() - GetPromoDiscountAmount();
+            return $"{Title} | Condition: {Condition} | Price: {SalePrice.ToString("C", CultureInfo.CurrentCulture)} | Revenue After Discount: {RevenueAfterDiscount.ToString("C", CultureInfo.CurrentCulture)}";
         }
     }
 }

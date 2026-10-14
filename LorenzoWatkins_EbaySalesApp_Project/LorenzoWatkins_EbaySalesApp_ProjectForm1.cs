@@ -35,14 +35,11 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         // Calculation triggered by button
         private void buttonCalculate_Click(object? sender, EventArgs e)
         {
-            // --- Variables declared at the beginning of the procedure ---
-            string itemTitle = string.Empty; // input: item title (string)
-            string itemCondition = string.Empty; // input: condition (string)
-            decimal salePrice = 0m; // input: price (numeric)
-
-            // Read inputs into variables (all input stored in variables)
-            itemTitle = this.textBoxTitle.Text;
-            itemCondition = this.textBoxCondition.Text;
+            // --- Set object properties from inputs (no local interim variables for results) ---
+            // Create an EbayItem object and set its properties from the form
+            EbayItem item = new EbayItem();
+            item.Title = this.textBoxTitle.Text;
+            item.Condition = this.textBoxCondition.Text;
 
             // Use Parse to convert the numeric string to a decimal (requirement)
             decimal parsedPrice;
@@ -56,30 +53,30 @@ namespace LorenzoWatkins_EbaySalesApp_Project
                 return;
             }
 
-            salePrice = parsedPrice; // store parsed numeric input in variable
+            item.SalePrice = parsedPrice; // set numeric input directly on the object
 
-            // Create an EbayItem object (requirement: create object in the form code)
-            EbayItem item = new EbayItem(itemTitle, itemCondition, salePrice);
+            // Perform calculations inside the class
+            item.Calculate();
 
-            // Use the class's methods and properties for all interim calculations
+            // Read results from object properties
             decimal ebayCommissionRate = item.CommissionRate;
             decimal salesTaxRate = item.SalesTaxRate;
-            decimal commissionAmount = item.GetCommissionAmount();
-            decimal salesTaxAmount = item.GetSalesTaxAmount();
-            decimal netRevenue = item.GetNetRevenue();
+            decimal commissionAmount = item.CommissionAmount;
+            decimal salesTaxAmount = item.SalesTaxAmount;
+            decimal netRevenue = item.NetRevenue;
             decimal promoDiscountRate = item.PromoDiscountRate;
-            decimal promoDiscountAmount = item.GetPromoDiscountAmount();
-            decimal revenueAfterDiscount = item.GetRevenueAfterDiscount();
+            decimal promoDiscountAmount = item.PromoDiscountAmount;
+            decimal revenueAfterDiscount = item.RevenueAfterDiscount;
 
             // --- Output: display all input, interim, and output data in ListBox ---
             listBoxOutput.Items.Clear();
 
-            // Inputs
-            listBoxOutput.Items.Add("Item Title: " + itemTitle);
-            listBoxOutput.Items.Add("Condition: " + itemCondition);
+            // Inputs (read from object properties)
+            listBoxOutput.Items.Add("Item Title: " + item.Title);
+            listBoxOutput.Items.Add("Condition: " + item.Condition);
 
             // Numeric data formatted appropriately
-            listBoxOutput.Items.Add("Sale Price: " + salePrice.ToString("C", CultureInfo.CurrentCulture)); // Currency
+            listBoxOutput.Items.Add("Sale Price: " + item.SalePrice.ToString("C", CultureInfo.CurrentCulture)); // Currency
             listBoxOutput.Items.Add("eBay Commission (rate): " + ebayCommissionRate.ToString("P", CultureInfo.CurrentCulture)); // Percent
             listBoxOutput.Items.Add("eBay Commission (amount): " + commissionAmount.ToString("C", CultureInfo.CurrentCulture)); // Currency
             listBoxOutput.Items.Add("Sales Tax (rate): " + salesTaxRate.ToString("P", CultureInfo.CurrentCulture)); // Percent
@@ -88,6 +85,9 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             listBoxOutput.Items.Add("Promotional Discount (rate): " + promoDiscountRate.ToString("P", CultureInfo.CurrentCulture)); // Percent
             listBoxOutput.Items.Add("Promotional Discount (amount): " + promoDiscountAmount.ToString("C", CultureInfo.CurrentCulture)); // Currency
             listBoxOutput.Items.Add("Revenue After Discount: " + revenueAfterDiscount.ToString("C", CultureInfo.CurrentCulture)); // Currency
+
+            // Also show the class-provided summary via ToString()
+            listBoxOutput.Items.Add("Summary: " + item.ToString());
 
             // Also show a numeric as a number formatted (Number format)
             listBoxOutput.Items.Add("Commission amount (number format): " + commissionAmount.ToString("N2", CultureInfo.CurrentCulture));
