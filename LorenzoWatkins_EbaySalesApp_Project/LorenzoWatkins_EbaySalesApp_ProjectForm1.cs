@@ -33,25 +33,25 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         }
 
         // Calculation triggered by button
-        private void buttonCalculate_Click(object? sender, EventArgs e)
+        private void btnCalc_Click(object? sender, EventArgs e)
         {
             // --- Set object properties from inputs (no local interim variables for results) ---
-            // Create an EbayItem object and set its properties from the form
+            // Create an EbayItem object and set its properties from the form (use new control names)
             EbayItem item = new EbayItem();
-            item.Title = this.textBoxTitle.Text;
-            item.Condition = this.textBoxCondition.Text;
+            item.ProductName = this.txtProduct.Text;
+            item.Condition = this.txtCond.Text;
 
-            // Use Parse to convert the numeric string to a decimal (requirement)
-            decimal parsedPrice;
-            try
+            // Use TryParse instead of try/catch per project guidelines
+            if (!decimal.TryParse(this.txtPrice.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal parsedPrice))
             {
-                parsedPrice = decimal.Parse(this.textBoxPrice.Text, CultureInfo.CurrentCulture);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Please enter a valid numeric sale price.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // invalid input: highlight field and return (no MessageBox here)
+                txtPrice.BackColor = Color.LightPink;
+                txtPrice.Focus();
                 return;
             }
+
+            // reset any previous error color
+            txtPrice.BackColor = SystemColors.Window;
 
             item.SalePrice = parsedPrice; // set numeric input directly on the object
 
@@ -68,34 +68,61 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             decimal promoDiscountAmount = item.PromoDiscountAmount;
             decimal revenueAfterDiscount = item.RevenueAfterDiscount;
 
-            // --- Output: display all input, interim, and output data in ListBox ---
-            listBoxOutput.Items.Clear();
+            // --- Output: display all input, interim, and output data in a table (DataGridView) ---
+            if (dgvOutput != null)
+            {
+                dgvOutput.Rows.Clear();
+            }
 
             // Inputs (read from object properties)
-            listBoxOutput.Items.Add("Item Title: " + item.Title);
-            listBoxOutput.Items.Add("Condition: " + item.Condition);
+            dgvOutput.Rows.Add("Product Name", item.ProductName, string.Empty);
+            dgvOutput.Rows.Add("Condition", item.Condition, string.Empty);
 
             // Numeric data formatted appropriately
-            listBoxOutput.Items.Add("Sale Price: " + item.SalePrice.ToString("C", CultureInfo.CurrentCulture)); // Currency
-            listBoxOutput.Items.Add("eBay Commission (rate): " + ebayCommissionRate.ToString("P", CultureInfo.CurrentCulture)); // Percent
-            listBoxOutput.Items.Add("eBay Commission (amount): " + commissionAmount.ToString("C", CultureInfo.CurrentCulture)); // Currency
-            listBoxOutput.Items.Add("Sales Tax (rate): " + salesTaxRate.ToString("P", CultureInfo.CurrentCulture)); // Percent
-            listBoxOutput.Items.Add("Sales Tax (amount): " + salesTaxAmount.ToString("C", CultureInfo.CurrentCulture)); // Currency
-            listBoxOutput.Items.Add("Net Revenue: " + netRevenue.ToString("C", CultureInfo.CurrentCulture)); // Currency
-            listBoxOutput.Items.Add("Promotional Discount (rate): " + promoDiscountRate.ToString("P", CultureInfo.CurrentCulture)); // Percent
-            listBoxOutput.Items.Add("Promotional Discount (amount): " + promoDiscountAmount.ToString("C", CultureInfo.CurrentCulture)); // Currency
-            listBoxOutput.Items.Add("Revenue After Discount: " + revenueAfterDiscount.ToString("C", CultureInfo.CurrentCulture)); // Currency
+            dgvOutput.Rows.Add("Sale Price", item.SalePrice.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
+            dgvOutput.Rows.Add("eBay Commission (rate)", ebayCommissionRate.ToString("P", CultureInfo.CurrentCulture), string.Empty); // Percent
+            dgvOutput.Rows.Add("eBay Commission (amount)", commissionAmount.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
+            dgvOutput.Rows.Add("Sales Tax (rate)", salesTaxRate.ToString("P", CultureInfo.CurrentCulture), string.Empty); // Percent
+            dgvOutput.Rows.Add("Sales Tax (amount)", salesTaxAmount.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
+
+            // Customer price = sale price + sales tax (simplified transaction)
+            decimal customerPrice = item.SalePrice + salesTaxAmount;
+            dgvOutput.Rows.Add("Customer Price", customerPrice.ToString("C", CultureInfo.CurrentCulture), string.Empty);
+
+            dgvOutput.Rows.Add("Net Revenue", netRevenue.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
+            dgvOutput.Rows.Add("Promotional Discount (rate)", promoDiscountRate.ToString("P", CultureInfo.CurrentCulture), string.Empty); // Percent
+            dgvOutput.Rows.Add("Promotional Discount (amount)", promoDiscountAmount.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
+            dgvOutput.Rows.Add("Revenue After Discount", revenueAfterDiscount.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
 
             // Also show the class-provided summary via ToString()
-            listBoxOutput.Items.Add("Summary: " + item.ToString());
+            dgvOutput.Rows.Add("Summary", item.ToString(), string.Empty);
 
             // Also show a numeric as a number formatted (Number format)
-            listBoxOutput.Items.Add("Commission amount (number format): " + commissionAmount.ToString("N2", CultureInfo.CurrentCulture));
+            dgvOutput.Rows.Add("Commission amount (number format)", commissionAmount.ToString("N2", CultureInfo.CurrentCulture), string.Empty);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnClear_Click(object sender, EventArgs e)
         {
+            // Clear inputs and output table (use new control names)
+            txtProduct.Text = string.Empty;
+            txtCond.Text = string.Empty;
+            txtPrice.Text = string.Empty;
+            if (dgvOutput != null)
+            {
+                dgvOutput.Rows.Clear();
+            }
+            // set focus back to title
+            txtProduct.Focus();
+        }
 
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            // MessageBox is allowed for exit confirmation per guidelines
+            var result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 }

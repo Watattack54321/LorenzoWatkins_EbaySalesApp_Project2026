@@ -1,4 +1,4 @@
-﻿namespace LorenzoWatkins_EbaySalesApp_Project
+namespace LorenzoWatkins_EbaySalesApp_Project
 {
     partial class LorenzoWatkins_EbaySalesApp_ProjectForm1
     {
@@ -26,112 +26,223 @@
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        // UI controls
-        private System.Windows.Forms.TextBox textBoxTitle;
-        private System.Windows.Forms.TextBox textBoxPrice;
-        private System.Windows.Forms.TextBox textBoxCondition;
-        private System.Windows.Forms.Button buttonCalculate;
-        private System.Windows.Forms.ListBox listBoxOutput;
-
         private void InitializeComponent()
         {
-            textBoxTitle = new TextBox();
-            textBoxPrice = new TextBox();
-            textBoxCondition = new TextBox();
-            buttonCalculate = new Button();
-            listBoxOutput = new ListBox();
-            button1 = new Button();
-            button2 = new Button();
+            txtProduct = new TextBox();
+            txtPrice = new TextBox();
+            txtCond = new TextBox();
+            btnCalc = new Button();
+            dgvOutput = new DataGridView();
+            lstOutput = new ListBox();
+            btnClear = new Button();
+            btnQuit = new Button();
+            tabMain = new TabControl();
+            pgInputs = new TabPage();
+            lblProduct = new Label();
+            lblCond = new Label();
+            lblPrice = new Label();
+            pgOutput = new TabPage();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dgvOutput).BeginInit();
+            tabMain.SuspendLayout();
+            pgInputs.SuspendLayout();
+            pgOutput.SuspendLayout();
             SuspendLayout();
             // 
-            // textBoxTitle
+            // txtProduct
             // 
-            textBoxTitle.Location = new Point(20, 20);
-            textBoxTitle.Name = "textBoxTitle";
-            textBoxTitle.PlaceholderText = "Enter item title";
-            textBoxTitle.Size = new Size(300, 23);
-            textBoxTitle.TabIndex = 0;
-            textBoxTitle.GotFocus += textBox_GotFocus;
-            textBoxTitle.LostFocus += textBox_LostFocus;
+            txtProduct.Location = new Point(20, 20);
+            txtProduct.Name = "txtProduct";
+            txtProduct.PlaceholderText = "Enter product name";
+            txtProduct.Size = new Size(300, 23);
+            txtProduct.TabIndex = 1;
+            txtProduct.GotFocus += textBox_GotFocus;
+            txtProduct.LostFocus += textBox_LostFocus;
             // 
-            // textBoxPrice
+            // txtPrice
             // 
-            textBoxPrice.Location = new Point(20, 90);
-            textBoxPrice.Name = "textBoxPrice";
-            textBoxPrice.PlaceholderText = "Enter sale price";
-            textBoxPrice.Size = new Size(150, 23);
-            textBoxPrice.TabIndex = 2;
-            textBoxPrice.GotFocus += textBox_GotFocus;
-            textBoxPrice.LostFocus += textBox_LostFocus;
+            txtPrice.Location = new Point(20, 111);
+            txtPrice.Name = "txtPrice";
+            txtPrice.PlaceholderText = "Enter sale price";
+            txtPrice.Size = new Size(150, 23);
+            txtPrice.TabIndex = 5;
+            txtPrice.GotFocus += textBox_GotFocus;
+            txtPrice.LostFocus += textBox_LostFocus;
             // 
-            // textBoxCondition
+            // txtCond
             // 
-            textBoxCondition.Location = new Point(20, 55);
-            textBoxCondition.Name = "textBoxCondition";
-            textBoxCondition.PlaceholderText = "Enter condition (e.g., New, Used)";
-            textBoxCondition.Size = new Size(300, 23);
-            textBoxCondition.TabIndex = 1;
-            textBoxCondition.GotFocus += textBox_GotFocus;
-            textBoxCondition.LostFocus += textBox_LostFocus;
+            txtCond.Location = new Point(20, 67);
+            txtCond.Name = "txtCond";
+            txtCond.PlaceholderText = "Enter condition (e.g., New, Used)";
+            txtCond.Size = new Size(300, 23);
+            txtCond.TabIndex = 3;
+            txtCond.GotFocus += textBox_GotFocus;
+            txtCond.LostFocus += textBox_LostFocus;
             // 
-            // buttonCalculate
+            // btnCalc
             // 
-            buttonCalculate.Location = new Point(20, 125);
-            buttonCalculate.Name = "buttonCalculate";
-            buttonCalculate.Size = new Size(120, 30);
-            buttonCalculate.TabIndex = 3;
-            buttonCalculate.Text = "Calculate Fees";
-            buttonCalculate.UseVisualStyleBackColor = true;
-            buttonCalculate.Click += buttonCalculate_Click;
+            btnCalc.Location = new Point(20, 181);
+            btnCalc.Name = "btnCalc";
+            btnCalc.Size = new Size(120, 30);
+            btnCalc.TabIndex = 6;
+            btnCalc.Text = "Calculate Fees";
+            btnCalc.UseVisualStyleBackColor = true;
+            btnCalc.Click += btnCalc_Click;
             // 
-            // listBoxOutput
+            // dgvOutput
             // 
-            listBoxOutput.FormattingEnabled = true;
-            listBoxOutput.Location = new Point(20, 170);
-            listBoxOutput.Name = "listBoxOutput";
-            listBoxOutput.Size = new Size(540, 214);
-            listBoxOutput.TabIndex = 4;
+            dgvOutput.AllowUserToAddRows = false;
+            dgvOutput.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvOutput.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3 });
+            dgvOutput.Location = new Point(20, 20);
+            dgvOutput.Name = "dgvOutput";
+            dgvOutput.RowHeadersVisible = false;
+            dgvOutput.Size = new Size(540, 330);
+            dgvOutput.TabIndex = 10;
             // 
-            // button1
+            // lstOutput
             // 
-            button1.Location = new Point(245, 129);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 5;
-            button1.Text = "Clear";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            lstOutput.FormattingEnabled = true;
+            lstOutput.Location = new Point(20, 170);
+            lstOutput.Name = "lstOutput";
+            lstOutput.Size = new Size(540, 214);
+            lstOutput.TabIndex = 9;
+            lstOutput.Visible = false;
             // 
-            // button2
+            // btnClear
             // 
-            button2.Location = new Point(452, 129);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 6;
-            button2.Text = "Quit";
-            button2.UseVisualStyleBackColor = true;
+            btnClear.Location = new Point(245, 188);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(75, 23);
+            btnClear.TabIndex = 7;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
+            // 
+            // btnQuit
+            // 
+            btnQuit.Location = new Point(441, 188);
+            btnQuit.Name = "btnQuit";
+            btnQuit.Size = new Size(75, 23);
+            btnQuit.TabIndex = 8;
+            btnQuit.Text = "Quit";
+            btnQuit.UseVisualStyleBackColor = true;
+            btnQuit.Click += btnQuit_Click;
+            // 
+            // tabMain
+            // 
+            tabMain.Controls.Add(pgInputs);
+            tabMain.Controls.Add(pgOutput);
+            tabMain.Location = new Point(10, 10);
+            tabMain.Name = "tabMain";
+            tabMain.SelectedIndex = 0;
+            tabMain.Size = new Size(580, 380);
+            tabMain.TabIndex = 11;
+            // 
+            // pgInputs
+            // 
+            pgInputs.Controls.Add(lblProduct);
+            pgInputs.Controls.Add(txtProduct);
+            pgInputs.Controls.Add(lblCond);
+            pgInputs.Controls.Add(txtCond);
+            pgInputs.Controls.Add(lblPrice);
+            pgInputs.Controls.Add(txtPrice);
+            pgInputs.Controls.Add(btnCalc);
+            pgInputs.Controls.Add(btnClear);
+            pgInputs.Controls.Add(btnQuit);
+            pgInputs.Location = new Point(4, 24);
+            pgInputs.Name = "pgInputs";
+            pgInputs.Padding = new Padding(3);
+            pgInputs.Size = new Size(572, 352);
+            pgInputs.TabIndex = 0;
+            pgInputs.Text = "Inputs";
+            // 
+            // lblProduct
+            // 
+            lblProduct.AutoSize = true;
+            lblProduct.Location = new Point(20, 2);
+            lblProduct.Name = "lblProduct";
+            lblProduct.Size = new Size(87, 15);
+            lblProduct.TabIndex = 0;
+            lblProduct.Text = "Product Name:";
+            // 
+            // lblCond
+            // 
+            lblCond.AutoSize = true;
+            lblCond.Location = new Point(20, 46);
+            lblCond.Name = "lblCond";
+            lblCond.Size = new Size(63, 15);
+            lblCond.TabIndex = 2;
+            lblCond.Text = "Condition:";
+            // 
+            // lblPrice
+            // 
+            lblPrice.AutoSize = true;
+            lblPrice.Location = new Point(20, 93);
+            lblPrice.Name = "lblPrice";
+            lblPrice.Size = new Size(36, 15);
+            lblPrice.TabIndex = 4;
+            lblPrice.Text = "Price:";
+            // 
+            // pgOutput
+            // 
+            pgOutput.Controls.Add(dgvOutput);
+            pgOutput.Controls.Add(lstOutput);
+            pgOutput.Location = new Point(4, 24);
+            pgOutput.Name = "pgOutput";
+            pgOutput.Padding = new Padding(3);
+            pgOutput.Size = new Size(572, 352);
+            pgOutput.TabIndex = 1;
+            pgOutput.Text = "Output";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
             // LorenzoWatkins_EbaySalesApp_ProjectForm1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(600, 400);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(textBoxTitle);
-            Controls.Add(textBoxCondition);
-            Controls.Add(textBoxPrice);
-            Controls.Add(buttonCalculate);
-            Controls.Add(listBoxOutput);
+            Controls.Add(tabMain);
             Name = "LorenzoWatkins_EbaySalesApp_ProjectForm1";
             Text = "EbaySalesApp";
+            ((System.ComponentModel.ISupportInitialize)dgvOutput).EndInit();
+            tabMain.ResumeLayout(false);
+            pgInputs.ResumeLayout(false);
+            pgInputs.PerformLayout();
+            pgOutput.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private Button button1;
-        private Button button2;
+        private System.Windows.Forms.TextBox txtProduct;
+        private System.Windows.Forms.TextBox txtPrice;
+        private System.Windows.Forms.TextBox txtCond;
+        private System.Windows.Forms.Button btnCalc;
+        private System.Windows.Forms.DataGridView dgvOutput;
+        private System.Windows.Forms.ListBox lstOutput;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnQuit;
+        private System.Windows.Forms.TabControl tabMain;
+        private System.Windows.Forms.TabPage pgInputs;
+        private System.Windows.Forms.TabPage pgOutput;
+        private System.Windows.Forms.Label lblProduct;
+        private System.Windows.Forms.Label lblCond;
+        private System.Windows.Forms.Label lblPrice;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     }
 }

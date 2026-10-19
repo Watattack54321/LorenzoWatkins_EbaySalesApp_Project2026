@@ -7,7 +7,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
     public class EbayItem
     {
         // Properties for data needed for calculations
-        public string Title { get; set; }
+        public string ProductName { get; set; }
         public string Condition { get; set; }
         public decimal SalePrice { get; set; }
 
@@ -19,7 +19,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         // Default constructor
         public EbayItem()
         {
-            Title = string.Empty;
+            ProductName = string.Empty;
             Condition = string.Empty;
             SalePrice = 0m;
 
@@ -30,9 +30,9 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         }
 
         // Constructor with parameters
-        public EbayItem(string title, string condition, decimal salePrice)
+        public EbayItem(string productName, string condition, decimal salePrice)
         {
-            Title = title;
+            ProductName = productName;
             Condition = condition;
             SalePrice = salePrice;
 
@@ -87,7 +87,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         // Provide a helpful string representation for the EbaySalesApp
         public override string ToString()
         {
-            return $"{Title} | Condition: {Condition} | Price: {SalePrice.ToString("C", CultureInfo.CurrentCulture)} | Revenue After Discount: {RevenueAfterDiscount.ToString("C", CultureInfo.CurrentCulture)}";
+            return $"{ProductName} | Condition: {Condition} | Price: {SalePrice.ToString("C", CultureInfo.CurrentCulture)} | Revenue After Discount: {RevenueAfterDiscount.ToString("C", CultureInfo.CurrentCulture)}";
         }
     }
 }

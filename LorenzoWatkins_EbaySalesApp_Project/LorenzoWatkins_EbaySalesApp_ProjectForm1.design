@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Minimal WinForms .design file to accompany the existing Designer.cs
-  This file is a lightweight XML placeholder that Visual Studio can recognize
-  as a form design document. It references the generated designer class.
+  Detailed WinForms .design file to provide a visual manifest of controls
+  so Visual Studio's designer can show the UI. This mirrors the controls
+  defined in LorenzoWatkins_EbaySalesApp_ProjectForm1.Designer.cs.
 -->
 <ComponentModelDesign
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -11,7 +11,7 @@
 
   <DesignTimeMeta>
 	<Type Name="LorenzoWatkins_EbaySalesApp_Project.LorenzoWatkins_EbaySalesApp_ProjectForm1"/>
-	<Language>F#</Language>
+	<Language>CS</Language>
   </DesignTimeMeta>
 
   <Form>
@@ -22,8 +22,107 @@
 	  <Property Name="Name">LorenzoWatkins_EbaySalesApp_ProjectForm1</Property>
 	  <Property Name="Text">EbaySalesApp</Property>
 	</Properties>
+
 	<Controls>
-	  <!-- Controls are defined in Designer.cs; this file only provides a simple manifest -->
+	  <Control>
+		<Type>System.Windows.Forms.TextBox</Type>
+		<Name>textBoxTitle</Name>
+		<Properties>
+		  <Property Name="Location" Type="System.Drawing.Point">20,20</Property>
+		  <Property Name="Size" Type="System.Drawing.Size">300,23</Property>
+		  <Property Name="PlaceholderText">Enter item title</Property>
+		</Properties>
+		<Events>
+		  <Event Name="GotFocus">textBox_GotFocus</Event>
+		  <Event Name="LostFocus">textBox_LostFocus</Event>
+		</Events>
+	  </Control>
+
+	  <Control>
+		<Type>System.Windows.Forms.TextBox</Type>
+		<Name>textBoxCondition</Name>
+		<Properties>
+		  <Property Name="Location" Type="System.Drawing.Point">20,55</Property>
+		  <Property Name="Size" Type="System.Drawing.Size">300,23</Property>
+		  <Property Name="PlaceholderText">Enter condition (e.g., New, Used)</Property>
+		</Properties>
+		<Events>
+		  <Event Name="GotFocus">textBox_GotFocus</Event>
+		  <Event Name="LostFocus">textBox_LostFocus</Event>
+		</Events>
+	  </Control>
+
+	  <Control>
+		<Type>System.Windows.Forms.TextBox</Type>
+		<Name>textBoxPrice</Name>
+		<Properties>
+		  <Property Name="Location" Type="System.Drawing.Point">20,90</Property>
+		  <Property Name="Size" Type="System.Drawing.Size">150,23</Property>
+		  <Property Name="PlaceholderText">Enter sale price</Property>
+		</Properties>
+		<Events>
+		  <Event Name="GotFocus">textBox_GotFocus</Event>
+		  <Event Name="LostFocus">textBox_LostFocus</Event>
+		</Events>
+	  </Control>
+
+	  <Control>
+		<Type>System.Windows.Forms.Button</Type>
+		<Name>buttonCalculate</Name>
+		<Properties>
+		  <Property Name="Location" Type="System.Drawing.Point">20,125</Property>
+		  <Property Name="Size" Type="System.Drawing.Size">120,30</Property>
+		  <Property Name="Text">Calculate Fees</Property>
+		</Properties>
+		<Events>
+		  <Event Name="Click">buttonCalculate_Click</Event>
+		</Events>
+	  </Control>
+
+	  <Control>
+		<Type>System.Windows.Forms.Button</Type>
+		<Name>button1</Name>
+		<Properties>
+		  <Property Name="Location" Type="System.Drawing.Point">245,129</Property>
+		  <Property Name="Size" Type="System.Drawing.Size">75,23</Property>
+		  <Property Name="Text">Clear</Property>
+		</Properties>
+		<Events>
+		  <Event Name="Click">button1_Click</Event>
+		</Events>
+	  </Control>
+
+	  <Control>
+		<Type>System.Windows.Forms.Button</Type>
+		<Name>button2</Name>
+		<Properties>
+		  <Property Name="Location" Type="System.Drawing.Point">452,129</Property>
+		  <Property Name="Size" Type="System.Drawing.Size">75,23</Property>
+		  <Property Name="Text">Quit</Property>
+		</Properties>
+	  </Control>
+
+	  <Control>
+		<Type>System.Windows.Forms.ListBox</Type>
+		<Name>listBoxOutput</Name>
+		<Properties>
+		  <Property Name="Location" Type="System.Drawing.Point">20,170</Property>
+		  <Property Name="Size" Type="System.Drawing.Size">540,214</Property>
+		</Properties>
+	  </Control>
+
+	  <Control>
+		<Type>System.Windows.Forms.DataGridView</Type>
+		<Name>dataGridOutput</Name>
+		<Properties>
+		  <Property Name="Location" Type="System.Drawing.Point">20,20</Property>
+		  <Property Name="Size" Type="System.Drawing.Size">540,330</Property>
+		  <Property Name="AllowUserToAddRows">false</Property>
+		  <Property Name="ReadOnly">true</Property>
+		  <Property Name="RowHeadersVisible">false</Property>
+		</Properties>
+	  </Control>
+
 	</Controls>
   </Form>
 </ComponentModelDesign>
