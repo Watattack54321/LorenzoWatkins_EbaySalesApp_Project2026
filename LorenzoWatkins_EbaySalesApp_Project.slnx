@@ -1,3 +1,10 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../../../../Downloads/EbayItem.cs" />
+    <File Path="../../../../Downloads/LorenzoWatkins_EbaySalesApp_ProjectForm1.cs" />
+    <File Path="../../../../Downloads/LorenzoWatkins_EbaySalesApp_ProjectForm1.Designer.cs" />
+    <File Path="../../../../Downloads/LorenzoWatkins_EbaySalesApp_ProjectForm1.resx" />
+    <File Path="../../../../Downloads/Program.cs" />
+  </Folder>
   <Project Path="LorenzoWatkins_EbaySalesApp_Project/LorenzoWatkins_EbaySalesApp_Project.csproj" />
 </Solution>

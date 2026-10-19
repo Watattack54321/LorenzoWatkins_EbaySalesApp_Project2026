@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Minimal WinForms .design file to accompany the existing Designer.cs
+  This file is a lightweight XML placeholder that Visual Studio can recognize
+  as a form design document. It references the generated designer class.
+-->
+<ComponentModelDesign
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/design">
+
+  <DesignTimeMeta>
+	<Type Name="LorenzoWatkins_EbaySalesApp_Project.LorenzoWatkins_EbaySalesApp_ProjectForm1"/>
+	<Language>F#</Language>
+  </DesignTimeMeta>
+
+  <Form>
+	<Properties>
+	  <Property Name="AutoScaleDimensions" Type="System.Drawing.SizeF">7,15</Property>
+	  <Property Name="AutoScaleMode">Font</Property>
+	  <Property Name="ClientSize" Type="System.Drawing.Size">600,400</Property>
+	  <Property Name="Name">LorenzoWatkins_EbaySalesApp_ProjectForm1</Property>
+	  <Property Name="Text">EbaySalesApp</Property>
+	</Properties>
+	<Controls>
+	  <!-- Controls are defined in Designer.cs; this file only provides a simple manifest -->
+	</Controls>
+  </Form>
+</ComponentModelDesign>
