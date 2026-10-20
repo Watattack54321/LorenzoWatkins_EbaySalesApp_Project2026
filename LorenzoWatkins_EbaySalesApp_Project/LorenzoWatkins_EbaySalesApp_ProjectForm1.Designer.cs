@@ -33,7 +33,10 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             txtCond = new TextBox();
             btnCalc = new Button();
             dgvOutput = new DataGridView();
-            lstOutput = new ListBox();
+            dgvColLabel = new DataGridViewTextBoxColumn();
+            dgvColValue = new DataGridViewTextBoxColumn();
+            dgvColExtra = new DataGridViewTextBoxColumn();
+            lstbox1 = new ListBox();
             btnClear = new Button();
             btnQuit = new Button();
             tabMain = new TabControl();
@@ -42,9 +45,6 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             lblCond = new Label();
             lblPrice = new Label();
             pgOutput = new TabPage();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvOutput).BeginInit();
             tabMain.SuspendLayout();
             pgInputs.SuspendLayout();
@@ -83,7 +83,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             // 
             // btnCalc
             // 
-            btnCalc.Location = new Point(20, 181);
+            btnCalc.Location = new Point(20, 160);
             btnCalc.Name = "btnCalc";
             btnCalc.Size = new Size(120, 30);
             btnCalc.TabIndex = 6;
@@ -95,27 +95,38 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             // 
             dgvOutput.AllowUserToAddRows = false;
             dgvOutput.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvOutput.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3 });
+            dgvOutput.Columns.AddRange(new DataGridViewColumn[] { dgvColLabel, dgvColValue, dgvColExtra });
             dgvOutput.Location = new Point(20, 20);
             dgvOutput.Name = "dgvOutput";
             dgvOutput.RowHeadersVisible = false;
             dgvOutput.Size = new Size(540, 330);
             dgvOutput.TabIndex = 10;
             // 
-            // lstOutput
+            // dgvColLabel
             // 
-            lstOutput.FormattingEnabled = true;
-            lstOutput.Location = new Point(20, 170);
-            lstOutput.Name = "lstOutput";
-            lstOutput.Size = new Size(540, 214);
-            lstOutput.TabIndex = 9;
-            lstOutput.Visible = false;
+            dgvColLabel.Name = "dgvColLabel";
+            // 
+            // dgvColValue
+            // 
+            dgvColValue.Name = "dgvColValue";
+            // 
+            // dgvColExtra
+            // 
+            dgvColExtra.Name = "dgvColExtra";
+            // 
+            // lstbox1
+            // 
+            lstbox1.FormattingEnabled = true;
+            lstbox1.Location = new Point(6, 196);
+            lstbox1.Name = "lstbox1";
+            lstbox1.Size = new Size(560, 139);
+            lstbox1.TabIndex = 9;
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(245, 188);
+            btnClear.Location = new Point(243, 160);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(75, 23);
+            btnClear.Size = new Size(77, 30);
             btnClear.TabIndex = 7;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
@@ -123,9 +134,9 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             // 
             // btnQuit
             // 
-            btnQuit.Location = new Point(441, 188);
+            btnQuit.Location = new Point(440, 160);
             btnQuit.Name = "btnQuit";
-            btnQuit.Size = new Size(75, 23);
+            btnQuit.Size = new Size(78, 30);
             btnQuit.TabIndex = 8;
             btnQuit.Text = "Quit";
             btnQuit.UseVisualStyleBackColor = true;
@@ -152,6 +163,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             pgInputs.Controls.Add(btnCalc);
             pgInputs.Controls.Add(btnClear);
             pgInputs.Controls.Add(btnQuit);
+            pgInputs.Controls.Add(lstbox1);
             pgInputs.Location = new Point(4, 24);
             pgInputs.Name = "pgInputs";
             pgInputs.Padding = new Padding(3);
@@ -189,25 +201,12 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             // pgOutput
             // 
             pgOutput.Controls.Add(dgvOutput);
-            pgOutput.Controls.Add(lstOutput);
             pgOutput.Location = new Point(4, 24);
             pgOutput.Name = "pgOutput";
             pgOutput.Padding = new Padding(3);
             pgOutput.Size = new Size(572, 352);
             pgOutput.TabIndex = 1;
             pgOutput.Text = "Output";
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
             // LorenzoWatkins_EbaySalesApp_ProjectForm1
             // 
@@ -232,7 +231,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         private System.Windows.Forms.TextBox txtCond;
         private System.Windows.Forms.Button btnCalc;
         private System.Windows.Forms.DataGridView dgvOutput;
-        private System.Windows.Forms.ListBox lstOutput;
+        private System.Windows.Forms.ListBox lstbox1;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnQuit;
         private System.Windows.Forms.TabControl tabMain;
@@ -241,8 +240,8 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         private System.Windows.Forms.Label lblProduct;
         private System.Windows.Forms.Label lblCond;
         private System.Windows.Forms.Label lblPrice;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dgvColLabel;
+        private DataGridViewTextBoxColumn dgvColValue;
+        private DataGridViewTextBoxColumn dgvColExtra;
     }
 }

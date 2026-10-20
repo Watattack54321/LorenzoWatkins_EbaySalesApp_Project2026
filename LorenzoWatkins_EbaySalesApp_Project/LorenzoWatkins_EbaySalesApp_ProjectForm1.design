@@ -104,10 +104,10 @@
 
 	  <Control>
 		<Type>System.Windows.Forms.ListBox</Type>
-		<Name>listBoxOutput</Name>
+		<Name>lstbox1</Name>
 		<Properties>
-		  <Property Name="Location" Type="System.Drawing.Point">20,170</Property>
-		  <Property Name="Size" Type="System.Drawing.Size">540,214</Property>
+		  <Property Name="Location" Type="System.Drawing.Point">340,20</Property>
+		  <Property Name="Size" Type="System.Drawing.Size">210,180</Property>
 		</Properties>
 	  </Control>
 

@@ -56,6 +56,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         public decimal NetRevenue { get; private set; }
         public decimal PromoDiscountAmount { get; private set; }
         public decimal RevenueAfterDiscount { get; private set; }
+        public decimal CustomerPrice { get; private set; }
 
         // Perform all calculations and populate the calculated properties
         public void Calculate()
@@ -72,6 +73,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
 
             CommissionAmount = SalePrice * CommissionRate;
             SalesTaxAmount = SalePrice * SalesTaxRate;
+            CustomerPrice = SalePrice + SalesTaxAmount;
             NetRevenue = SalePrice - CommissionAmount - SalesTaxAmount;
             PromoDiscountAmount = SalePrice * PromoDiscountRate;
             RevenueAfterDiscount = NetRevenue - PromoDiscountAmount;
@@ -83,11 +85,12 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         public decimal GetNetRevenue() => NetRevenue == 0m ? SalePrice - GetCommissionAmount() - GetSalesTaxAmount() : NetRevenue;
         public decimal GetPromoDiscountAmount() => PromoDiscountAmount == 0m ? SalePrice * PromoDiscountRate : PromoDiscountAmount;
         public decimal GetRevenueAfterDiscount() => RevenueAfterDiscount == 0m ? GetNetRevenue() - GetPromoDiscountAmount() : RevenueAfterDiscount;
+        public decimal GetCustomerPrice() => CustomerPrice == 0m ? SalePrice + GetSalesTaxAmount() : CustomerPrice;
 
         // Provide a helpful string representation for the EbaySalesApp
         public override string ToString()
         {
-            return $"{ProductName} | Condition: {Condition} | Price: {SalePrice.ToString("C", CultureInfo.CurrentCulture)} | Revenue After Discount: {RevenueAfterDiscount.ToString("C", CultureInfo.CurrentCulture)}";
+            return $"{ProductName} | Condition: {Condition} | Price: {SalePrice.ToString("C", CultureInfo.CurrentCulture)} | Customer Price: {GetCustomerPrice().ToString("C", CultureInfo.CurrentCulture)} | Revenue After Discount: {GetRevenueAfterDiscount().ToString("C", CultureInfo.CurrentCulture)}";
         }
     }
 }
