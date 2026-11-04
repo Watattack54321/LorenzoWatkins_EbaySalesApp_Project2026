@@ -7,9 +7,60 @@ namespace LorenzoWatkins_EbaySalesApp_Project
 {
     public partial class LorenzoWatkins_EbaySalesApp_ProjectForm1 : Form
     {
+        private const int StandardFeeChoice = 1;
+        private const int ReducedFeeChoice = 2;
+        private const int PremiumFeeChoice = 3;
+
+        private int selectedFeeChoice;
+        private decimal selectedFeeRate;
+
         public LorenzoWatkins_EbaySalesApp_ProjectForm1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object? sender, EventArgs e)
+        {
+            rbStandardFee.Checked = true;
+        }
+
+        private void feeRateRadioButton_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (sender is not RadioButton radioButton || !radioButton.Checked) return;
+
+            if (radioButton == rbStandardFee)
+            {
+                SetFeeChoice(StandardFeeChoice);
+            }
+            else if (radioButton == rbReducedFee)
+            {
+                SetFeeChoice(ReducedFeeChoice);
+            }
+            else if (radioButton == rbPremiumFee)
+            {
+                SetFeeChoice(PremiumFeeChoice);
+            }
+        }
+
+        private void SetFeeChoice(int feeChoice)
+        {
+            selectedFeeChoice = feeChoice;
+
+            switch (selectedFeeChoice)
+            {
+                case StandardFeeChoice:
+                    selectedFeeRate = 0.129m;
+                    break;
+                case ReducedFeeChoice:
+                    selectedFeeRate = 0.119m;
+                    break;
+                case PremiumFeeChoice:
+                    selectedFeeRate = 0.149m;
+                    break;
+                default:
+                    selectedFeeRate = 0.129m;
+                    break;
+            }
         }
 
         // When a text box receives focus change its background to highlight
@@ -35,11 +86,9 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         // Calculation triggered by button
         private void btnCalc_Click(object? sender, EventArgs e)
         {
-            // --- Set object properties from inputs (no local interim variables for results) ---
-            // Create an EbayItem object and set its properties from the form (use new control names)
-            EbayItem item = new EbayItem();
-            item.ProductName = this.txtProduct.Text;
-            item.Condition = this.txtCond.Text;
+            // --- Set object properties from inputs ---
+            EbaySales sale = new EbaySales();
+            sale.CustomerName = this.txtProduct.Text;
 
             // Use TryParse instead of try/catch per project guidelines
             if (!decimal.TryParse(this.txtPrice.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal parsedPrice))
@@ -53,41 +102,30 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             // reset any previous error color
             txtPrice.BackColor = SystemColors.Window;
 
-            item.SalePrice = parsedPrice; // set numeric input directly on the object
+            sale.SaleAmount = parsedPrice;
+
+            sale.EbayFeeRate = selectedFeeRate;
 
             // Perform calculations inside the class
-            item.Calculate();
+            sale.Calculate();
 
             // --- Output: display all input, interim, and output data in a table (DataGridView) ---
-            if (dgvOutput != null)
-            {
-                dgvOutput.Rows.Clear();
-            }
+            if (dgvOutput == null) return;
+            dgvOutput.Rows.Clear();
 
-            // Inputs (read from object properties)
-            dgvOutput.Rows.Add("Product Name", item.ProductName, string.Empty);
-            dgvOutput.Rows.Add("Condition", item.Condition, string.Empty);
+            // Inputs and calculated values (read from object properties)
+            dgvOutput.Rows.Add("Customer Name", sale.CustomerName, string.Empty);
+            dgvOutput.Rows.Add("Sale Amount", sale.SaleAmount.ToString("C", CultureInfo.CurrentCulture), string.Empty);
 
-            // Numeric data formatted appropriately
-            dgvOutput.Rows.Add("Sale Price", item.SalePrice.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
-            dgvOutput.Rows.Add("eBay Commission (rate)", item.CommissionRate.ToString("P", CultureInfo.CurrentCulture), string.Empty); // Percent
-            dgvOutput.Rows.Add("eBay Commission (amount)", item.CommissionAmount.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
-            dgvOutput.Rows.Add("Sales Tax (rate)", item.SalesTaxRate.ToString("P", CultureInfo.CurrentCulture), string.Empty); // Percent
-            dgvOutput.Rows.Add("Sales Tax (amount)", item.SalesTaxAmount.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
-            dgvOutput.Rows.Add("Customer Price", item.CustomerPrice.ToString("C", CultureInfo.CurrentCulture), string.Empty);
-            dgvOutput.Rows.Add("Net Revenue", item.NetRevenue.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
-            dgvOutput.Rows.Add("Promotional Discount (rate)", item.PromoDiscountRate.ToString("P", CultureInfo.CurrentCulture), string.Empty); // Percent
-            dgvOutput.Rows.Add("Promotional Discount (amount)", item.PromoDiscountAmount.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
-            dgvOutput.Rows.Add("Revenue After Discount", item.RevenueAfterDiscount.ToString("C", CultureInfo.CurrentCulture), string.Empty); // Currency
+            dgvOutput.Rows.Add("eBay Fee Rate", sale.EbayFeeRate.ToString("P", CultureInfo.CurrentCulture), string.Empty);
+            dgvOutput.Rows.Add("eBay Fee", sale.EbayFee.ToString("C", CultureInfo.CurrentCulture), string.Empty);
+            dgvOutput.Rows.Add("Amount Seller Gets", sale.AmountSellerGets.ToString("C", CultureInfo.CurrentCulture), string.Empty);
 
             // Also show the class-provided summary via ToString()
-            dgvOutput.Rows.Add("Summary", item.ToString(), string.Empty);
-
-            // Also show a numeric as a number formatted (Number format)
-            dgvOutput.Rows.Add("Commission amount (number format)", item.CommissionAmount.ToString("N2", CultureInfo.CurrentCulture), string.Empty);
+            dgvOutput.Rows.Add("Summary", sale.ToString(), string.Empty);
 
             // Keep each calculated design in the list box for comparison.
-            lstbox1.Items.Add(item.ToString());
+            lstbox1.Items.Add(sale.ToString());
             tabMain.SelectedTab = pgInputs;
         }
 

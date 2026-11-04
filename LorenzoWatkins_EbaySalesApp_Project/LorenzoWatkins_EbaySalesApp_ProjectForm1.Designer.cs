@@ -44,10 +44,15 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             lblProduct = new Label();
             lblCond = new Label();
             lblPrice = new Label();
+            grpFeeRate = new GroupBox();
+            rbStandardFee = new RadioButton();
+            rbReducedFee = new RadioButton();
+            rbPremiumFee = new RadioButton();
             pgOutput = new TabPage();
             ((System.ComponentModel.ISupportInitialize)dgvOutput).BeginInit();
             tabMain.SuspendLayout();
             pgInputs.SuspendLayout();
+            grpFeeRate.SuspendLayout();
             pgOutput.SuspendLayout();
             SuspendLayout();
             // 
@@ -55,7 +60,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             // 
             txtProduct.Location = new Point(20, 20);
             txtProduct.Name = "txtProduct";
-            txtProduct.PlaceholderText = "Enter product name";
+            txtProduct.PlaceholderText = "Enter customer name";
             txtProduct.Size = new Size(300, 23);
             txtProduct.TabIndex = 1;
             txtProduct.GotFocus += textBox_GotFocus;
@@ -75,7 +80,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             // 
             txtCond.Location = new Point(20, 67);
             txtCond.Name = "txtCond";
-            txtCond.PlaceholderText = "Enter condition (e.g., New, Used)";
+            txtCond.PlaceholderText = "Enter eBay fee rate (e.g., 12.9)";
             txtCond.Size = new Size(300, 23);
             txtCond.TabIndex = 3;
             txtCond.GotFocus += textBox_GotFocus;
@@ -142,6 +147,52 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             btnQuit.UseVisualStyleBackColor = true;
             btnQuit.Click += btnQuit_Click;
             // 
+            // grpFeeRate
+            // 
+            grpFeeRate.Controls.Add(rbPremiumFee);
+            grpFeeRate.Controls.Add(rbReducedFee);
+            grpFeeRate.Controls.Add(rbStandardFee);
+            grpFeeRate.Location = new Point(340, 10);
+            grpFeeRate.Name = "grpFeeRate";
+            grpFeeRate.Size = new Size(200, 125);
+            grpFeeRate.TabIndex = 12;
+            grpFeeRate.TabStop = false;
+            grpFeeRate.Text = "eBay Fee Rate";
+            // 
+            // rbStandardFee
+            // 
+            rbStandardFee.AutoSize = true;
+            rbStandardFee.Location = new Point(15, 25);
+            rbStandardFee.Name = "rbStandardFee";
+            rbStandardFee.Size = new Size(140, 19);
+            rbStandardFee.TabIndex = 13;
+            rbStandardFee.TabStop = true;
+            rbStandardFee.Text = "Standard (12.9%)";
+            rbStandardFee.UseVisualStyleBackColor = true;
+            rbStandardFee.CheckedChanged += feeRateRadioButton_CheckedChanged;
+            // 
+            // rbReducedFee
+            // 
+            rbReducedFee.AutoSize = true;
+            rbReducedFee.Location = new Point(15, 55);
+            rbReducedFee.Name = "rbReducedFee";
+            rbReducedFee.Size = new Size(130, 19);
+            rbReducedFee.TabIndex = 14;
+            rbReducedFee.Text = "Reduced (11.9%)";
+            rbReducedFee.UseVisualStyleBackColor = true;
+            rbReducedFee.CheckedChanged += feeRateRadioButton_CheckedChanged;
+            // 
+            // rbPremiumFee
+            // 
+            rbPremiumFee.AutoSize = true;
+            rbPremiumFee.Location = new Point(15, 85);
+            rbPremiumFee.Name = "rbPremiumFee";
+            rbPremiumFee.Size = new Size(130, 19);
+            rbPremiumFee.TabIndex = 15;
+            rbPremiumFee.Text = "Premium (14.9%)";
+            rbPremiumFee.UseVisualStyleBackColor = true;
+            rbPremiumFee.CheckedChanged += feeRateRadioButton_CheckedChanged;
+            // 
             // tabMain
             // 
             tabMain.Controls.Add(pgInputs);
@@ -164,6 +215,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             pgInputs.Controls.Add(btnClear);
             pgInputs.Controls.Add(btnQuit);
             pgInputs.Controls.Add(lstbox1);
+            pgInputs.Controls.Add(grpFeeRate);
             pgInputs.Location = new Point(4, 24);
             pgInputs.Name = "pgInputs";
             pgInputs.Padding = new Padding(3);
@@ -178,7 +230,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             lblProduct.Name = "lblProduct";
             lblProduct.Size = new Size(87, 15);
             lblProduct.TabIndex = 0;
-            lblProduct.Text = "Product Name:";
+            lblProduct.Text = "Customer Name:";
             // 
             // lblCond
             // 
@@ -187,7 +239,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             lblCond.Name = "lblCond";
             lblCond.Size = new Size(63, 15);
             lblCond.TabIndex = 2;
-            lblCond.Text = "Condition:";
+            lblCond.Text = "eBay Fee Rate (%):";
             // 
             // lblPrice
             // 
@@ -216,10 +268,13 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             Controls.Add(tabMain);
             Name = "LorenzoWatkins_EbaySalesApp_ProjectForm1";
             Text = "EbaySalesApp";
+            Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dgvOutput).EndInit();
             tabMain.ResumeLayout(false);
             pgInputs.ResumeLayout(false);
             pgInputs.PerformLayout();
+            grpFeeRate.ResumeLayout(false);
+            grpFeeRate.PerformLayout();
             pgOutput.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -240,6 +295,10 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         private System.Windows.Forms.Label lblProduct;
         private System.Windows.Forms.Label lblCond;
         private System.Windows.Forms.Label lblPrice;
+        private System.Windows.Forms.GroupBox grpFeeRate;
+        private System.Windows.Forms.RadioButton rbStandardFee;
+        private System.Windows.Forms.RadioButton rbReducedFee;
+        private System.Windows.Forms.RadioButton rbPremiumFee;
         private DataGridViewTextBoxColumn dgvColLabel;
         private DataGridViewTextBoxColumn dgvColValue;
         private DataGridViewTextBoxColumn dgvColExtra;
