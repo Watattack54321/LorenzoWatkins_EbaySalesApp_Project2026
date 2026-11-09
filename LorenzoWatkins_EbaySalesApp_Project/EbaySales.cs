@@ -1,5 +1,3 @@
-using System.Globalization;
-
 namespace LorenzoWatkins_EbaySalesApp_Project
 {
     public class EbaySales
@@ -19,11 +17,11 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             EbayFeeRate = 0.129m;
         }
 
-        public EbaySales(string customerName, decimal saleAmount)
+        public EbaySales(string customerName, decimal saleAmount, decimal ebayFeeRate)
         {
             CustomerName = customerName;
             SaleAmount = saleAmount;
-            EbayFeeRate = 0.129m;
+            EbayFeeRate = ebayFeeRate;
             Calculate();
         }
 
@@ -35,7 +33,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
 
         public override string ToString()
         {
-            return $"Customer: {CustomerName} | Sale Amount: {SaleAmount.ToString("C", CultureInfo.CurrentCulture)} | eBay Fee: {EbayFee.ToString("C", CultureInfo.CurrentCulture)} | Seller Gets: {AmountSellerGets.ToString("C", CultureInfo.CurrentCulture)}";
+            return CustomerName + ", Seller Gets: " + AmountSellerGets.ToString("C") + ", eBay Fee: " + EbayFee.ToString("C");
         }
     }
 }

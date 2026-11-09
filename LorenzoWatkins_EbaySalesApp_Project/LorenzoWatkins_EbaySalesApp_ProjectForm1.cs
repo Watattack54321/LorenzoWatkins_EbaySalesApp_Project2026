@@ -1,6 +1,5 @@
 using System;
 using System.Drawing;
-using System.Globalization;
 using System.Windows.Forms;
 
 namespace LorenzoWatkins_EbaySalesApp_Project
@@ -19,14 +18,14 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             InitializeComponent();
         }
 
-        private void Form1_Load(object? sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
             rbStandardFee.Checked = true;
         }
 
-        private void feeRateRadioButton_CheckedChanged(object? sender, EventArgs e)
+        private void feeRateRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (sender is not RadioButton radioButton || !radioButton.Checked) return;
+            if (!(sender is RadioButton radioButton) || !radioButton.Checked) return;
 
             if (radioButton == rbStandardFee)
             {
@@ -63,94 +62,60 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             }
         }
 
-        // When a text box receives focus change its background to highlight
-        private void textBox_GotFocus(object? sender, EventArgs e)
+        private void textBox_GotFocus(object sender, EventArgs e)
         {
-            // input stored in variable only for clarity; the control remains the source of truth
-            TextBox? focusedBox = sender as TextBox;
-            if (focusedBox == null) return;
-            // interim variable for color
-            Color highlightColor = Color.LightYellow;
-            focusedBox.BackColor = highlightColor;
-        }
-
-        // When a text box loses focus change color back to default
-        private void textBox_LostFocus(object? sender, EventArgs e)
-        {
-            TextBox? box = sender as TextBox;
-            if (box == null) return;
-            Color defaultColor = SystemColors.Window;
-            box.BackColor = defaultColor;
-        }
-
-        // Calculation triggered by button
-        private void btnCalc_Click(object? sender, EventArgs e)
-        {
-            // --- Set object properties from inputs ---
-            EbaySales sale = new EbaySales();
-            sale.CustomerName = this.txtProduct.Text;
-
-            // Use TryParse instead of try/catch per project guidelines
-            if (!decimal.TryParse(this.txtPrice.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal parsedPrice))
+            if (sender is TextBox focusedBox)
             {
-                // invalid input: highlight field and return (no MessageBox here)
+                focusedBox.BackColor = Color.LightYellow;
+            }
+        }
+
+        private void textBox_LostFocus(object sender, EventArgs e)
+        {
+            if (sender is TextBox box)
+            {
+                box.BackColor = SystemColors.Window;
+            }
+        }
+
+        private void btnCalc_Click(object sender, EventArgs e)
+        {
+            decimal parsedPrice;
+            if (!decimal.TryParse(txtPrice.Text, out parsedPrice))
+            {
                 txtPrice.BackColor = Color.LightPink;
                 txtPrice.Focus();
                 return;
             }
 
-            // reset any previous error color
             txtPrice.BackColor = SystemColors.Window;
 
-            sale.SaleAmount = parsedPrice;
-
-            sale.EbayFeeRate = selectedFeeRate;
-
-            // Perform calculations inside the class
-            sale.Calculate();
-
-            // --- Output: display all input, interim, and output data in a table (DataGridView) ---
-            if (dgvOutput == null) return;
+            EbaySales sale = new EbaySales(txtProduct.Text, parsedPrice, selectedFeeRate);
             dgvOutput.Rows.Clear();
 
-            // Inputs and calculated values (read from object properties)
-            dgvOutput.Rows.Add("Customer Name", sale.CustomerName, string.Empty);
-            dgvOutput.Rows.Add("Sale Amount", sale.SaleAmount.ToString("C", CultureInfo.CurrentCulture), string.Empty);
-
-            dgvOutput.Rows.Add("eBay Fee Rate", sale.EbayFeeRate.ToString("P", CultureInfo.CurrentCulture), string.Empty);
-            dgvOutput.Rows.Add("eBay Fee", sale.EbayFee.ToString("C", CultureInfo.CurrentCulture), string.Empty);
-            dgvOutput.Rows.Add("Amount Seller Gets", sale.AmountSellerGets.ToString("C", CultureInfo.CurrentCulture), string.Empty);
-
-            // Also show the class-provided summary via ToString()
+            dgvOutput.Rows.Add("Customer Name", sale.CustomerName);
+            dgvOutput.Rows.Add("Sale Amount", sale.SaleAmount.ToString("C"));
+            dgvOutput.Rows.Add("eBay Fee Rate", sale.EbayFeeRate.ToString("P"));
+            dgvOutput.Rows.Add("eBay Fee", sale.EbayFee.ToString("C"));
+            dgvOutput.Rows.Add("Amount Seller Gets", sale.AmountSellerGets.ToString("C"));
             dgvOutput.Rows.Add("Summary", sale.ToString(), string.Empty);
-
-            // Keep each calculated design in the list box for comparison.
-            lstbox1.Items.Add(sale.ToString());
-            tabMain.SelectedTab = pgInputs;
+            tabMain.SelectedTab = pgOutput;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            // Clear inputs and output table (use new control names)
             txtProduct.Text = string.Empty;
-            txtCond.Text = string.Empty;
             txtPrice.Text = string.Empty;
-            if (dgvOutput != null)
-            {
-                dgvOutput.Rows.Clear();
-            }
-            lstbox1.Items.Clear();
-            // set focus back to title
+            dgvOutput.Rows.Clear();
             txtProduct.Focus();
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
         {
-            // MessageBox is allowed for exit confirmation per guidelines
-            var result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                Application.Exit();
+                this.Close();
             }
         }
     }

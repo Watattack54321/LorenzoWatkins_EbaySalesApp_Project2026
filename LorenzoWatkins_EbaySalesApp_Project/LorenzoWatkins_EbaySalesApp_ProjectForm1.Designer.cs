@@ -30,19 +30,16 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         {
             txtProduct = new TextBox();
             txtPrice = new TextBox();
-            txtCond = new TextBox();
             btnCalc = new Button();
             dgvOutput = new DataGridView();
             dgvColLabel = new DataGridViewTextBoxColumn();
             dgvColValue = new DataGridViewTextBoxColumn();
             dgvColExtra = new DataGridViewTextBoxColumn();
-            lstbox1 = new ListBox();
             btnClear = new Button();
             btnQuit = new Button();
             tabMain = new TabControl();
             pgInputs = new TabPage();
             lblProduct = new Label();
-            lblCond = new Label();
             lblPrice = new Label();
             grpFeeRate = new GroupBox();
             rbStandardFee = new RadioButton();
@@ -76,16 +73,6 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             txtPrice.GotFocus += textBox_GotFocus;
             txtPrice.LostFocus += textBox_LostFocus;
             // 
-            // txtCond
-            // 
-            txtCond.Location = new Point(20, 67);
-            txtCond.Name = "txtCond";
-            txtCond.PlaceholderText = "Enter eBay fee rate (e.g., 12.9)";
-            txtCond.Size = new Size(300, 23);
-            txtCond.TabIndex = 3;
-            txtCond.GotFocus += textBox_GotFocus;
-            txtCond.LostFocus += textBox_LostFocus;
-            // 
             // btnCalc
             // 
             btnCalc.Location = new Point(20, 160);
@@ -118,14 +105,6 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             // dgvColExtra
             // 
             dgvColExtra.Name = "dgvColExtra";
-            // 
-            // lstbox1
-            // 
-            lstbox1.FormattingEnabled = true;
-            lstbox1.Location = new Point(6, 196);
-            lstbox1.Name = "lstbox1";
-            lstbox1.Size = new Size(560, 139);
-            lstbox1.TabIndex = 9;
             // 
             // btnClear
             // 
@@ -207,14 +186,11 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             // 
             pgInputs.Controls.Add(lblProduct);
             pgInputs.Controls.Add(txtProduct);
-            pgInputs.Controls.Add(lblCond);
-            pgInputs.Controls.Add(txtCond);
             pgInputs.Controls.Add(lblPrice);
             pgInputs.Controls.Add(txtPrice);
             pgInputs.Controls.Add(btnCalc);
             pgInputs.Controls.Add(btnClear);
             pgInputs.Controls.Add(btnQuit);
-            pgInputs.Controls.Add(lstbox1);
             pgInputs.Controls.Add(grpFeeRate);
             pgInputs.Location = new Point(4, 24);
             pgInputs.Name = "pgInputs";
@@ -231,15 +207,6 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             lblProduct.Size = new Size(87, 15);
             lblProduct.TabIndex = 0;
             lblProduct.Text = "Customer Name:";
-            // 
-            // lblCond
-            // 
-            lblCond.AutoSize = true;
-            lblCond.Location = new Point(20, 46);
-            lblCond.Name = "lblCond";
-            lblCond.Size = new Size(63, 15);
-            lblCond.TabIndex = 2;
-            lblCond.Text = "eBay Fee Rate (%):";
             // 
             // lblPrice
             // 
@@ -283,17 +250,14 @@ namespace LorenzoWatkins_EbaySalesApp_Project
 
         private System.Windows.Forms.TextBox txtProduct;
         private System.Windows.Forms.TextBox txtPrice;
-        private System.Windows.Forms.TextBox txtCond;
         private System.Windows.Forms.Button btnCalc;
         private System.Windows.Forms.DataGridView dgvOutput;
-        private System.Windows.Forms.ListBox lstbox1;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnQuit;
         private System.Windows.Forms.TabControl tabMain;
         private System.Windows.Forms.TabPage pgInputs;
         private System.Windows.Forms.TabPage pgOutput;
         private System.Windows.Forms.Label lblProduct;
-        private System.Windows.Forms.Label lblCond;
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.GroupBox grpFeeRate;
         private System.Windows.Forms.RadioButton rbStandardFee;
