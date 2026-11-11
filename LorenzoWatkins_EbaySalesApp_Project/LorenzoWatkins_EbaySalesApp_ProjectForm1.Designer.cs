@@ -45,6 +45,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             rbStandardFee = new RadioButton();
             rbReducedFee = new RadioButton();
             rbPremiumFee = new RadioButton();
+            lstErrors = new ListBox();
             pgOutput = new TabPage();
             ((System.ComponentModel.ISupportInitialize)dgvOutput).BeginInit();
             tabMain.SuspendLayout();
@@ -172,6 +173,15 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             rbPremiumFee.UseVisualStyleBackColor = true;
             rbPremiumFee.CheckedChanged += feeRateRadioButton_CheckedChanged;
             // 
+            // lstErrors
+            // 
+            lstErrors.FormattingEnabled = true;
+            lstErrors.ItemHeight = 15;
+            lstErrors.Location = new Point(340, 150);
+            lstErrors.Name = "lstErrors";
+            lstErrors.Size = new Size(200, 79);
+            lstErrors.TabIndex = 16;
+            // 
             // tabMain
             // 
             tabMain.Controls.Add(pgInputs);
@@ -192,6 +202,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             pgInputs.Controls.Add(btnClear);
             pgInputs.Controls.Add(btnQuit);
             pgInputs.Controls.Add(grpFeeRate);
+            pgInputs.Controls.Add(lstErrors);
             pgInputs.Location = new Point(4, 24);
             pgInputs.Name = "pgInputs";
             pgInputs.Padding = new Padding(3);
@@ -263,6 +274,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         private System.Windows.Forms.RadioButton rbStandardFee;
         private System.Windows.Forms.RadioButton rbReducedFee;
         private System.Windows.Forms.RadioButton rbPremiumFee;
+        private System.Windows.Forms.ListBox lstErrors;
         private DataGridViewTextBoxColumn dgvColLabel;
         private DataGridViewTextBoxColumn dgvColValue;
         private DataGridViewTextBoxColumn dgvColExtra;

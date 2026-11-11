@@ -80,26 +80,36 @@ namespace LorenzoWatkins_EbaySalesApp_Project
 
         private void btnCalc_Click(object sender, EventArgs e)
         {
+            lstErrors.Items.Clear();
+
             decimal parsedPrice;
-            if (!decimal.TryParse(txtPrice.Text, out parsedPrice))
+            bool priceIsValid = decimal.TryParse(txtPrice.Text, out parsedPrice);
+            if (priceIsValid && parsedPrice < 0)
             {
-                txtPrice.BackColor = Color.LightPink;
-                txtPrice.Focus();
-                return;
+                priceIsValid = false;
             }
 
-            txtPrice.BackColor = SystemColors.Window;
+            if (priceIsValid)
+            {
+                txtPrice.BackColor = SystemColors.Window;
 
-            EbaySales sale = new EbaySales(txtProduct.Text, parsedPrice, selectedFeeRate);
-            dgvOutput.Rows.Clear();
+                EbaySales sale = new EbaySales(txtProduct.Text, parsedPrice, selectedFeeRate);
+                dgvOutput.Rows.Clear();
 
-            dgvOutput.Rows.Add("Customer Name", sale.CustomerName);
-            dgvOutput.Rows.Add("Sale Amount", sale.SaleAmount.ToString("C"));
-            dgvOutput.Rows.Add("eBay Fee Rate", sale.EbayFeeRate.ToString("P"));
-            dgvOutput.Rows.Add("eBay Fee", sale.EbayFee.ToString("C"));
-            dgvOutput.Rows.Add("Amount Seller Gets", sale.AmountSellerGets.ToString("C"));
-            dgvOutput.Rows.Add("Summary", sale.ToString(), string.Empty);
-            tabMain.SelectedTab = pgOutput;
+                dgvOutput.Rows.Add("Customer Name", sale.CustomerName);
+                dgvOutput.Rows.Add("Sale Amount", sale.SaleAmount.ToString("C"));
+                dgvOutput.Rows.Add("eBay Fee Rate", sale.EbayFeeRate.ToString("P"));
+                dgvOutput.Rows.Add("eBay Fee", sale.EbayFee.ToString("C"));
+                dgvOutput.Rows.Add("Amount Seller Gets", sale.AmountSellerGets.ToString("C"));
+                dgvOutput.Rows.Add("Summary", sale.ToString(), string.Empty);
+                tabMain.SelectedTab = pgOutput;
+            }
+            else
+            {
+                lstErrors.Items.Add("Please enter a valid non-negative sale amount.");
+                txtPrice.BackColor = Color.LightPink;
+                txtPrice.Focus();
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -107,6 +117,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             txtProduct.Text = string.Empty;
             txtPrice.Text = string.Empty;
             dgvOutput.Rows.Clear();
+            lstErrors.Items.Clear();
             txtProduct.Focus();
         }
 
