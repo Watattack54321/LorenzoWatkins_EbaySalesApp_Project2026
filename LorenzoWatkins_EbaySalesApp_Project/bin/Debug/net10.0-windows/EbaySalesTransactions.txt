@@ -1,0 +1,18 @@
+11/16/2026 10:22:58 AM
+----- New Transaction -----
+Customer: EDP
+Category: Electronics
+Sale Amount: $200.00
+eBay Fee Rate: 12.90%
+eBay Fee: $25.80
+Seller Gets: $174.20
+
+11/16/2026 10:29:09 AM
+----- New Transaction -----
+Customer: EDP445
+Category: Electronics
+Sale Amount: $500.00
+eBay Fee Rate: 12.90%
+eBay Fee: $64.50
+Seller Gets: $435.50
+

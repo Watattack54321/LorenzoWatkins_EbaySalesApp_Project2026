@@ -1,156 +1,137 @@
 using System;
 using System.Drawing;
-using System.Globalization;
+using System.IO;
 using System.Windows.Forms;
 
 namespace LorenzoWatkins_EbaySalesApp_Project
 {
     public partial class LorenzoWatkins_EbaySalesApp_ProjectForm1 : Form
     {
-        private const int StandardFeeChoice = 1;
-        private const int ReducedFeeChoice = 2;
-        private const int PremiumFeeChoice = 3;
-
-        private int selectedFeeChoice;
-        private decimal selectedFeeRate;
+        private string fileName = "EbaySalesTransactions.txt";
 
         public LorenzoWatkins_EbaySalesApp_ProjectForm1()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object? sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
-            rbStandardFee.Checked = true;
+            rbElectronics.Checked = true;
         }
 
-        private void feeRateRadioButton_CheckedChanged(object? sender, EventArgs e)
+        private void textBox_GotFocus(object sender, EventArgs e)
         {
-            if (sender is not RadioButton radioButton || !radioButton.Checked) return;
+            ((TextBox)sender).BackColor = Color.LightYellow;
+        }
 
-            if (radioButton == rbStandardFee)
+        private void textBox_LostFocus(object sender, EventArgs e)
+        {
+            ((TextBox)sender).BackColor = SystemColors.Window;
+        }
+
+        private void btnCalc_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtProduct.Text))
             {
-                SetFeeChoice(StandardFeeChoice);
+                MessageBox.Show("Enter a customer name.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtProduct.Focus();
+                return;
             }
-            else if (radioButton == rbReducedFee)
+
+            decimal saleAmount;
+            if (!decimal.TryParse(txtPrice.Text, out saleAmount) || saleAmount <= 0)
             {
-                SetFeeChoice(ReducedFeeChoice);
-            }
-            else if (radioButton == rbPremiumFee)
-            {
-                SetFeeChoice(PremiumFeeChoice);
-            }
-        }
-
-        private void SetFeeChoice(int feeChoice)
-        {
-            selectedFeeChoice = feeChoice;
-
-            switch (selectedFeeChoice)
-            {
-                case StandardFeeChoice:
-                    selectedFeeRate = 0.129m;
-                    break;
-                case ReducedFeeChoice:
-                    selectedFeeRate = 0.119m;
-                    break;
-                case PremiumFeeChoice:
-                    selectedFeeRate = 0.149m;
-                    break;
-                default:
-                    selectedFeeRate = 0.129m;
-                    break;
-            }
-        }
-
-        // When a text box receives focus change its background to highlight
-        private void textBox_GotFocus(object? sender, EventArgs e)
-        {
-            // input stored in variable only for clarity; the control remains the source of truth
-            TextBox? focusedBox = sender as TextBox;
-            if (focusedBox == null) return;
-            // interim variable for color
-            Color highlightColor = Color.LightYellow;
-            focusedBox.BackColor = highlightColor;
-        }
-
-        // When a text box loses focus change color back to default
-        private void textBox_LostFocus(object? sender, EventArgs e)
-        {
-            TextBox? box = sender as TextBox;
-            if (box == null) return;
-            Color defaultColor = SystemColors.Window;
-            box.BackColor = defaultColor;
-        }
-
-        // Calculation triggered by button
-        private void btnCalc_Click(object? sender, EventArgs e)
-        {
-            // --- Set object properties from inputs ---
-            EbaySales sale = new EbaySales();
-            sale.CustomerName = this.txtProduct.Text;
-
-            // Use TryParse instead of try/catch per project guidelines
-            if (!decimal.TryParse(this.txtPrice.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal parsedPrice))
-            {
-                // invalid input: highlight field and return (no MessageBox here)
+                MessageBox.Show("Enter a sale price greater than zero.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtPrice.BackColor = Color.LightPink;
                 txtPrice.Focus();
                 return;
             }
 
-            // reset any previous error color
             txtPrice.BackColor = SystemColors.Window;
 
-            sale.SaleAmount = parsedPrice;
+            string category;
+            if (rbClothing.Checked)
+            {
+                category = "Clothing";
+            }
+            else if (rbCollectibles.Checked)
+            {
+                category = "Collectibles";
+            }
+            else
+            {
+                category = "Electronics";
+            }
 
-            sale.EbayFeeRate = selectedFeeRate;
+            EbaySales sale = new EbaySales(txtProduct.Text, category, saleAmount);
 
-            // Perform calculations inside the class
+            switch (sale.Category)
+            {
+                case "Clothing":
+                    sale.EbayFeeRate = 0.119m;
+                    break;
+                case "Collectibles":
+                    sale.EbayFeeRate = 0.149m;
+                    break;
+                default:
+                    sale.EbayFeeRate = 0.129m;
+                    break;
+            }
+
             sale.Calculate();
+            WriteTransaction(sale);
+            tabMain.SelectedTab = pgOutput;
+        }
 
-            // --- Output: display all input, interim, and output data in a table (DataGridView) ---
-            if (dgvOutput == null) return;
-            dgvOutput.Rows.Clear();
+        private void WriteTransaction(EbaySales sale)
+        {
+            StreamWriter outputFile;
+            try
+            {
+                outputFile = File.AppendText(fileName);
+                try
+                {
+                    outputFile.WriteLine(DateTime.Now.ToString());
+                    outputFile.WriteLine("----- New Transaction -----");
+                    outputFile.WriteLine("Customer: " + sale.CustomerName);
+                    outputFile.WriteLine("Category: " + sale.Category);
+                    outputFile.WriteLine("Sale Amount: " + sale.SaleAmount.ToString("C"));
+                    outputFile.WriteLine("eBay Fee Rate: " + sale.EbayFeeRate.ToString("P"));
+                    outputFile.WriteLine("eBay Fee: " + sale.EbayFee.ToString("C"));
+                    outputFile.WriteLine("Seller Gets: " + sale.AmountSellerGets.ToString("C"));
+                    outputFile.WriteLine();
+                }
+                finally
+                {
+                    outputFile.Close();
+                }
 
-            // Inputs and calculated values (read from object properties)
-            dgvOutput.Rows.Add("Customer Name", sale.CustomerName, string.Empty);
-            dgvOutput.Rows.Add("Sale Amount", sale.SaleAmount.ToString("C", CultureInfo.CurrentCulture), string.Empty);
-
-            dgvOutput.Rows.Add("eBay Fee Rate", sale.EbayFeeRate.ToString("P", CultureInfo.CurrentCulture), string.Empty);
-            dgvOutput.Rows.Add("eBay Fee", sale.EbayFee.ToString("C", CultureInfo.CurrentCulture), string.Empty);
-            dgvOutput.Rows.Add("Amount Seller Gets", sale.AmountSellerGets.ToString("C", CultureInfo.CurrentCulture), string.Empty);
-
-            // Also show the class-provided summary via ToString()
-            dgvOutput.Rows.Add("Summary", sale.ToString(), string.Empty);
-
-            // Keep each calculated design in the list box for comparison.
-            lstbox1.Items.Add(sale.ToString());
-            tabMain.SelectedTab = pgInputs;
+                lstbox1.Items.Add(sale.ToString());
+            }
+            catch (IOException)
+            {
+                MessageBox.Show("The transaction could not be written to the file.", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show("You do not have permission to write the transaction file.", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            // Clear inputs and output table (use new control names)
             txtProduct.Text = string.Empty;
-            txtCond.Text = string.Empty;
             txtPrice.Text = string.Empty;
-            if (dgvOutput != null)
-            {
-                dgvOutput.Rows.Clear();
-            }
             lstbox1.Items.Clear();
-            // set focus back to title
             txtProduct.Focus();
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
         {
-            // MessageBox is allowed for exit confirmation per guidelines
-            var result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                Application.Exit();
+                this.Close();
             }
         }
     }

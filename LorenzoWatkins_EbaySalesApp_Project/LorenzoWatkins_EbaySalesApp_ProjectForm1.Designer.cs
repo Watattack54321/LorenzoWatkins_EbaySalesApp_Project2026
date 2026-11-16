@@ -30,29 +30,22 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         {
             txtProduct = new TextBox();
             txtPrice = new TextBox();
-            txtCond = new TextBox();
             btnCalc = new Button();
-            dgvOutput = new DataGridView();
-            dgvColLabel = new DataGridViewTextBoxColumn();
-            dgvColValue = new DataGridViewTextBoxColumn();
-            dgvColExtra = new DataGridViewTextBoxColumn();
             lstbox1 = new ListBox();
             btnClear = new Button();
             btnQuit = new Button();
             tabMain = new TabControl();
             pgInputs = new TabPage();
             lblProduct = new Label();
-            lblCond = new Label();
             lblPrice = new Label();
-            grpFeeRate = new GroupBox();
-            rbStandardFee = new RadioButton();
-            rbReducedFee = new RadioButton();
-            rbPremiumFee = new RadioButton();
+            grpCategory = new GroupBox();
+            rbCollectibles = new RadioButton();
+            rbClothing = new RadioButton();
+            rbElectronics = new RadioButton();
             pgOutput = new TabPage();
-            ((System.ComponentModel.ISupportInitialize)dgvOutput).BeginInit();
             tabMain.SuspendLayout();
             pgInputs.SuspendLayout();
-            grpFeeRate.SuspendLayout();
+            grpCategory.SuspendLayout();
             pgOutput.SuspendLayout();
             SuspendLayout();
             // 
@@ -68,71 +61,38 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             // 
             // txtPrice
             // 
-            txtPrice.Location = new Point(20, 111);
+            txtPrice.Location = new Point(20, 67);
             txtPrice.Name = "txtPrice";
             txtPrice.PlaceholderText = "Enter sale price";
             txtPrice.Size = new Size(150, 23);
-            txtPrice.TabIndex = 5;
+            txtPrice.TabIndex = 3;
             txtPrice.GotFocus += textBox_GotFocus;
             txtPrice.LostFocus += textBox_LostFocus;
-            // 
-            // txtCond
-            // 
-            txtCond.Location = new Point(20, 67);
-            txtCond.Name = "txtCond";
-            txtCond.PlaceholderText = "Enter eBay fee rate (e.g., 12.9)";
-            txtCond.Size = new Size(300, 23);
-            txtCond.TabIndex = 3;
-            txtCond.GotFocus += textBox_GotFocus;
-            txtCond.LostFocus += textBox_LostFocus;
             // 
             // btnCalc
             // 
             btnCalc.Location = new Point(20, 160);
             btnCalc.Name = "btnCalc";
             btnCalc.Size = new Size(120, 30);
-            btnCalc.TabIndex = 6;
+            btnCalc.TabIndex = 4;
             btnCalc.Text = "Calculate Fees";
             btnCalc.UseVisualStyleBackColor = true;
             btnCalc.Click += btnCalc_Click;
             // 
-            // dgvOutput
-            // 
-            dgvOutput.AllowUserToAddRows = false;
-            dgvOutput.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvOutput.Columns.AddRange(new DataGridViewColumn[] { dgvColLabel, dgvColValue, dgvColExtra });
-            dgvOutput.Location = new Point(20, 20);
-            dgvOutput.Name = "dgvOutput";
-            dgvOutput.RowHeadersVisible = false;
-            dgvOutput.Size = new Size(540, 330);
-            dgvOutput.TabIndex = 10;
-            // 
-            // dgvColLabel
-            // 
-            dgvColLabel.Name = "dgvColLabel";
-            // 
-            // dgvColValue
-            // 
-            dgvColValue.Name = "dgvColValue";
-            // 
-            // dgvColExtra
-            // 
-            dgvColExtra.Name = "dgvColExtra";
-            // 
             // lstbox1
             // 
             lstbox1.FormattingEnabled = true;
-            lstbox1.Location = new Point(6, 196);
+            lstbox1.Location = new Point(12, 12);
             lstbox1.Name = "lstbox1";
-            lstbox1.Size = new Size(560, 139);
-            lstbox1.TabIndex = 9;
+            lstbox1.Size = new Size(540, 319);
+            lstbox1.TabIndex = 10;
             // 
             // btnClear
             // 
             btnClear.Location = new Point(243, 160);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(77, 30);
-            btnClear.TabIndex = 7;
+            btnClear.TabIndex = 5;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click;
@@ -142,56 +102,10 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             btnQuit.Location = new Point(440, 160);
             btnQuit.Name = "btnQuit";
             btnQuit.Size = new Size(78, 30);
-            btnQuit.TabIndex = 8;
+            btnQuit.TabIndex = 6;
             btnQuit.Text = "Quit";
             btnQuit.UseVisualStyleBackColor = true;
             btnQuit.Click += btnQuit_Click;
-            // 
-            // grpFeeRate
-            // 
-            grpFeeRate.Controls.Add(rbPremiumFee);
-            grpFeeRate.Controls.Add(rbReducedFee);
-            grpFeeRate.Controls.Add(rbStandardFee);
-            grpFeeRate.Location = new Point(340, 10);
-            grpFeeRate.Name = "grpFeeRate";
-            grpFeeRate.Size = new Size(200, 125);
-            grpFeeRate.TabIndex = 12;
-            grpFeeRate.TabStop = false;
-            grpFeeRate.Text = "eBay Fee Rate";
-            // 
-            // rbStandardFee
-            // 
-            rbStandardFee.AutoSize = true;
-            rbStandardFee.Location = new Point(15, 25);
-            rbStandardFee.Name = "rbStandardFee";
-            rbStandardFee.Size = new Size(140, 19);
-            rbStandardFee.TabIndex = 13;
-            rbStandardFee.TabStop = true;
-            rbStandardFee.Text = "Standard (12.9%)";
-            rbStandardFee.UseVisualStyleBackColor = true;
-            rbStandardFee.CheckedChanged += feeRateRadioButton_CheckedChanged;
-            // 
-            // rbReducedFee
-            // 
-            rbReducedFee.AutoSize = true;
-            rbReducedFee.Location = new Point(15, 55);
-            rbReducedFee.Name = "rbReducedFee";
-            rbReducedFee.Size = new Size(130, 19);
-            rbReducedFee.TabIndex = 14;
-            rbReducedFee.Text = "Reduced (11.9%)";
-            rbReducedFee.UseVisualStyleBackColor = true;
-            rbReducedFee.CheckedChanged += feeRateRadioButton_CheckedChanged;
-            // 
-            // rbPremiumFee
-            // 
-            rbPremiumFee.AutoSize = true;
-            rbPremiumFee.Location = new Point(15, 85);
-            rbPremiumFee.Name = "rbPremiumFee";
-            rbPremiumFee.Size = new Size(130, 19);
-            rbPremiumFee.TabIndex = 15;
-            rbPremiumFee.Text = "Premium (14.9%)";
-            rbPremiumFee.UseVisualStyleBackColor = true;
-            rbPremiumFee.CheckedChanged += feeRateRadioButton_CheckedChanged;
             // 
             // tabMain
             // 
@@ -207,15 +121,12 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             // 
             pgInputs.Controls.Add(lblProduct);
             pgInputs.Controls.Add(txtProduct);
-            pgInputs.Controls.Add(lblCond);
-            pgInputs.Controls.Add(txtCond);
             pgInputs.Controls.Add(lblPrice);
             pgInputs.Controls.Add(txtPrice);
             pgInputs.Controls.Add(btnCalc);
             pgInputs.Controls.Add(btnClear);
             pgInputs.Controls.Add(btnQuit);
-            pgInputs.Controls.Add(lstbox1);
-            pgInputs.Controls.Add(grpFeeRate);
+            pgInputs.Controls.Add(grpCategory);
             pgInputs.Location = new Point(4, 24);
             pgInputs.Name = "pgInputs";
             pgInputs.Padding = new Padding(3);
@@ -228,31 +139,65 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             lblProduct.AutoSize = true;
             lblProduct.Location = new Point(20, 2);
             lblProduct.Name = "lblProduct";
-            lblProduct.Size = new Size(87, 15);
+            lblProduct.Size = new Size(97, 15);
             lblProduct.TabIndex = 0;
             lblProduct.Text = "Customer Name:";
-            // 
-            // lblCond
-            // 
-            lblCond.AutoSize = true;
-            lblCond.Location = new Point(20, 46);
-            lblCond.Name = "lblCond";
-            lblCond.Size = new Size(63, 15);
-            lblCond.TabIndex = 2;
-            lblCond.Text = "eBay Fee Rate (%):";
             // 
             // lblPrice
             // 
             lblPrice.AutoSize = true;
-            lblPrice.Location = new Point(20, 93);
+            lblPrice.Location = new Point(20, 46);
             lblPrice.Name = "lblPrice";
             lblPrice.Size = new Size(36, 15);
             lblPrice.TabIndex = 4;
             lblPrice.Text = "Price:";
             // 
+            // grpCategory
+            // 
+            grpCategory.Controls.Add(rbCollectibles);
+            grpCategory.Controls.Add(rbClothing);
+            grpCategory.Controls.Add(rbElectronics);
+            grpCategory.Location = new Point(340, 10);
+            grpCategory.Name = "grpCategory";
+            grpCategory.Size = new Size(200, 125);
+            grpCategory.TabIndex = 12;
+            grpCategory.TabStop = false;
+            grpCategory.Text = "Product Category";
+            // 
+            // rbCollectibles
+            // 
+            rbCollectibles.AutoSize = true;
+            rbCollectibles.Location = new Point(15, 85);
+            rbCollectibles.Name = "rbCollectibles";
+            rbCollectibles.Size = new Size(86, 19);
+            rbCollectibles.TabIndex = 15;
+            rbCollectibles.Text = "Collectibles";
+            rbCollectibles.UseVisualStyleBackColor = true;
+            // 
+            // rbClothing
+            // 
+            rbClothing.AutoSize = true;
+            rbClothing.Location = new Point(15, 55);
+            rbClothing.Name = "rbClothing";
+            rbClothing.Size = new Size(72, 19);
+            rbClothing.TabIndex = 14;
+            rbClothing.Text = "Clothing";
+            rbClothing.UseVisualStyleBackColor = true;
+            // 
+            // rbElectronics
+            // 
+            rbElectronics.AutoSize = true;
+            rbElectronics.Location = new Point(15, 25);
+            rbElectronics.Name = "rbElectronics";
+            rbElectronics.Size = new Size(81, 19);
+            rbElectronics.TabIndex = 13;
+            rbElectronics.TabStop = true;
+            rbElectronics.Text = "Electronics";
+            rbElectronics.UseVisualStyleBackColor = true;
+            // 
             // pgOutput
             // 
-            pgOutput.Controls.Add(dgvOutput);
+            pgOutput.Controls.Add(lstbox1);
             pgOutput.Location = new Point(4, 24);
             pgOutput.Name = "pgOutput";
             pgOutput.Padding = new Padding(3);
@@ -269,12 +214,11 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             Name = "LorenzoWatkins_EbaySalesApp_ProjectForm1";
             Text = "EbaySalesApp";
             Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)dgvOutput).EndInit();
             tabMain.ResumeLayout(false);
             pgInputs.ResumeLayout(false);
             pgInputs.PerformLayout();
-            grpFeeRate.ResumeLayout(false);
-            grpFeeRate.PerformLayout();
+            grpCategory.ResumeLayout(false);
+            grpCategory.PerformLayout();
             pgOutput.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -283,9 +227,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
 
         private System.Windows.Forms.TextBox txtProduct;
         private System.Windows.Forms.TextBox txtPrice;
-        private System.Windows.Forms.TextBox txtCond;
         private System.Windows.Forms.Button btnCalc;
-        private System.Windows.Forms.DataGridView dgvOutput;
         private System.Windows.Forms.ListBox lstbox1;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnQuit;
@@ -293,14 +235,10 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         private System.Windows.Forms.TabPage pgInputs;
         private System.Windows.Forms.TabPage pgOutput;
         private System.Windows.Forms.Label lblProduct;
-        private System.Windows.Forms.Label lblCond;
         private System.Windows.Forms.Label lblPrice;
-        private System.Windows.Forms.GroupBox grpFeeRate;
-        private System.Windows.Forms.RadioButton rbStandardFee;
-        private System.Windows.Forms.RadioButton rbReducedFee;
-        private System.Windows.Forms.RadioButton rbPremiumFee;
-        private DataGridViewTextBoxColumn dgvColLabel;
-        private DataGridViewTextBoxColumn dgvColValue;
-        private DataGridViewTextBoxColumn dgvColExtra;
+        private System.Windows.Forms.GroupBox grpCategory;
+        private System.Windows.Forms.RadioButton rbElectronics;
+        private System.Windows.Forms.RadioButton rbClothing;
+        private System.Windows.Forms.RadioButton rbCollectibles;
     }
 }
