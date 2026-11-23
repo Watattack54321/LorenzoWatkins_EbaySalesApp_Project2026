@@ -79,3 +79,12 @@ eBay Fee Rate: 12.00%
 eBay Fee: $6.00
 Seller Gets: $44.00
 
+Date and Time: 11/23/2026 10:46:31 AM
+----- New Transaction -----
+Customer: E
+Category: Electronics
+Sale Amount: $50.00
+eBay Fee Rate: 12.00%
+eBay Fee: $6.00
+Seller Gets: $44.00
+

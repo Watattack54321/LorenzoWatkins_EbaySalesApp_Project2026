@@ -8,11 +8,11 @@ namespace LorenzoWatkins_EbaySalesApp_Project
     public partial class LorenzoWatkins_EbaySalesApp_ProjectForm1 : Form
     {
         private string fileName = "EbaySalesTransactions.txt";
-        private string configurationFileName = "EbaySalesFees.txt";
+        private string configurationFileName = Path.Combine(AppContext.BaseDirectory, "EbaySalesFees.txt");
         private string selectedCategory = EbaySales.ELECTRONICS;
-        private decimal electronicsFee = 0.12m;
-        private decimal clothingFee = 0.10m;
-        private decimal collectiblesFee = 0.08m;
+        private decimal electronicsFee = EbaySales.ELECTRONICS_FEE;
+        private decimal clothingFee = EbaySales.CLOTHING_FEE;
+        private decimal collectiblesFee = EbaySales.COLLECTIBLES_FEE;
 
         public LorenzoWatkins_EbaySalesApp_ProjectForm1()
         {
@@ -27,70 +27,74 @@ namespace LorenzoWatkins_EbaySalesApp_Project
 
         private void ReadConfigurationFile()
         {
-            if (!File.Exists(configurationFileName))
+            bool configurationRead = false;
+            do
             {
-                openFileDialog1.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog1.Title = "Open eBay Fee Configuration File";
-
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    configurationFileName = openFileDialog1.FileName;
-                }
-            }
-
-            try
-            {
-                StreamReader inputFile = File.OpenText(configurationFileName);
                 try
                 {
-                    int lineNumber = 0;
-                    do
+                    StreamReader inputFile;
+                    inputFile = File.OpenText(configurationFileName);
+                    try
                     {
-                        string configurationLine = inputFile.ReadLine() ?? string.Empty;
-                        decimal fee;
-                        if (!decimal.TryParse(configurationLine, out fee))
+                        int lineNumber = 0;
+                        do
                         {
-                            throw new FormatException("The fee configuration file contains an invalid value.");
+                            string configurationLine = inputFile.ReadLine() ?? string.Empty;
+                            decimal fee;
+                            if (!decimal.TryParse(configurationLine, out fee))
+                            {
+                                throw new FormatException("The fee configuration file contains an invalid value.");
+                            }
+
+                            switch (lineNumber)
+                            {
+                                case 0:
+                                    electronicsFee = fee;
+                                    break;
+                                case 1:
+                                    clothingFee = fee;
+                                    break;
+                                case 2:
+                                    collectiblesFee = fee;
+                                    break;
+                            }
+
+                            lineNumber++;
+                        }
+                        while (lineNumber < 3);
+
+                        if (!string.IsNullOrEmpty(inputFile.ReadLine()))
+                        {
+                            throw new FormatException("The fee configuration file contains too many values.");
                         }
 
-                        if (lineNumber == 0)
-                        {
-                            electronicsFee = fee;
-                        }
-                        else if (lineNumber == 1)
-                        {
-                            clothingFee = fee;
-                        }
-                        else
-                        {
-                            collectiblesFee = fee;
-                        }
-
-                        lineNumber++;
+                        configurationRead = true;
                     }
-                    while (lineNumber < 3);
+                    finally
+                    {
+                        inputFile.Close();
+                    }
                 }
-                finally
+                catch (Exception)
                 {
-                    inputFile.Close();
+                    openFileDialog1.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                    openFileDialog1.Title = "Open eBay Fee Configuration File";
+                    openFileDialog1.InitialDirectory = AppContext.BaseDirectory;
+                    openFileDialog1.FileName = Path.GetFileName(configurationFileName);
+
+                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        configurationFileName = openFileDialog1.FileName;
+                        configurationRead = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("The default fee values will be used.", "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        configurationRead = true;
+                    }
                 }
             }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show("The fee configuration file could not be found. Default fee values will be used.", "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (IOException)
-            {
-                MessageBox.Show("The fee configuration file could not be read. Default fee values will be used.", "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("The fee configuration file contains invalid data. Default fee values will be used.", "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                MessageBox.Show("You do not have permission to read the fee configuration file. Default fee values will be used.", "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            while (!configurationRead);
         }
 
         private void rdoElectronics_CheckedChanged(object sender, EventArgs e)

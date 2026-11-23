@@ -5,6 +5,9 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         public const string ELECTRONICS = "Electronics";
         public const string CLOTHING = "Clothing";
         public const string COLLECTIBLES = "Collectibles";
+        public const decimal ELECTRONICS_FEE = 0.12m;
+        public const decimal CLOTHING_FEE = 0.10m;
+        public const decimal COLLECTIBLES_FEE = 0.08m;
         public decimal ElectronicsFee { get; set; }
         public decimal ClothingFee { get; set; }
         public decimal CollectiblesFee { get; set; }
@@ -24,9 +27,9 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             EbayFee = 0m;
             AmountSellerGets = 0m;
             EbayFeeRate = 0.129m;
-            ElectronicsFee = 0.12m;
-            ClothingFee = 0.10m;
-            CollectiblesFee = 0.08m;
+            ElectronicsFee = ELECTRONICS_FEE;
+            ClothingFee = CLOTHING_FEE;
+            CollectiblesFee = COLLECTIBLES_FEE;
         }
 
         public EbaySales(string customerName, string category, decimal saleAmount)
@@ -37,9 +40,9 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             EbayFee = 0m;
             AmountSellerGets = 0m;
             EbayFeeRate = 0.129m;
-            ElectronicsFee = 0.12m;
-            ClothingFee = 0.10m;
-            CollectiblesFee = 0.08m;
+            ElectronicsFee = ELECTRONICS_FEE;
+            ClothingFee = CLOTHING_FEE;
+            CollectiblesFee = COLLECTIBLES_FEE;
             Calculate();
         }
 
