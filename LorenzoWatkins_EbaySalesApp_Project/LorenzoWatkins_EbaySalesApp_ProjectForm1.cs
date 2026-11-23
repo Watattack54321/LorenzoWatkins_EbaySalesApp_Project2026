@@ -7,14 +7,12 @@ namespace LorenzoWatkins_EbaySalesApp_Project
 {
     public partial class LorenzoWatkins_EbaySalesApp_ProjectForm1 : Form
     {
-        private const string ELECTRONICS = "Electronics";
-        private const string CLOTHING = "Clothing";
-        private const string COLLECTIBLES = "Collectibles";
-        private const decimal ELECTRONICS_FEE = 0.12m;
-        private const decimal CLOTHING_FEE = 0.10m;
-        private const decimal COLLECTIBLES_FEE = 0.08m;
         private string fileName = "EbaySalesTransactions.txt";
-        private string selectedCategory = ELECTRONICS;
+        private string configurationFileName = "EbaySalesFees.txt";
+        private string selectedCategory = EbaySales.ELECTRONICS;
+        private decimal electronicsFee = 0.12m;
+        private decimal clothingFee = 0.10m;
+        private decimal collectiblesFee = 0.08m;
 
         public LorenzoWatkins_EbaySalesApp_ProjectForm1()
         {
@@ -23,14 +21,83 @@ namespace LorenzoWatkins_EbaySalesApp_Project
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ReadConfigurationFile();
             rdoElectronics.Checked = true;
+        }
+
+        private void ReadConfigurationFile()
+        {
+            if (!File.Exists(configurationFileName))
+            {
+                openFileDialog1.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog1.Title = "Open eBay Fee Configuration File";
+
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    configurationFileName = openFileDialog1.FileName;
+                }
+            }
+
+            try
+            {
+                StreamReader inputFile = File.OpenText(configurationFileName);
+                try
+                {
+                    int lineNumber = 0;
+                    do
+                    {
+                        string configurationLine = inputFile.ReadLine() ?? string.Empty;
+                        decimal fee;
+                        if (!decimal.TryParse(configurationLine, out fee))
+                        {
+                            throw new FormatException("The fee configuration file contains an invalid value.");
+                        }
+
+                        if (lineNumber == 0)
+                        {
+                            electronicsFee = fee;
+                        }
+                        else if (lineNumber == 1)
+                        {
+                            clothingFee = fee;
+                        }
+                        else
+                        {
+                            collectiblesFee = fee;
+                        }
+
+                        lineNumber++;
+                    }
+                    while (lineNumber < 3);
+                }
+                finally
+                {
+                    inputFile.Close();
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("The fee configuration file could not be found. Default fee values will be used.", "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (IOException)
+            {
+                MessageBox.Show("The fee configuration file could not be read. Default fee values will be used.", "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("The fee configuration file contains invalid data. Default fee values will be used.", "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show("You do not have permission to read the fee configuration file. Default fee values will be used.", "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void rdoElectronics_CheckedChanged(object sender, EventArgs e)
         {
             if (rdoElectronics.Checked)
             {
-                selectedCategory = ELECTRONICS;
+                selectedCategory = EbaySales.ELECTRONICS;
             }
         }
 
@@ -38,7 +105,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         {
             if (rdoClothing.Checked)
             {
-                selectedCategory = CLOTHING;
+                selectedCategory = EbaySales.CLOTHING;
             }
         }
 
@@ -46,7 +113,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
         {
             if (rdoCollectibles.Checked)
             {
-                selectedCategory = COLLECTIBLES;
+                selectedCategory = EbaySales.COLLECTIBLES;
             }
         }
 
@@ -66,35 +133,18 @@ namespace LorenzoWatkins_EbaySalesApp_Project
             bool saleAmountIsValid = decimal.TryParse(txtPrice.Text, out saleAmount) && saleAmount > 0m;
             bool customerNameIsValid = !string.IsNullOrWhiteSpace(txtProduct.Text);
 
-            lstOut.Items.Clear();
 
+            // you should not clear the list box except on a clear
             if (saleAmountIsValid && customerNameIsValid)
             {
                 txtPrice.BackColor = SystemColors.Window;
 
                 EbaySales sale = new EbaySales(txtProduct.Text, selectedCategory, saleAmount);
 
-                switch (sale.Category)
-                {
-                    case ELECTRONICS:
-                        sale.EbayFeeRate = ELECTRONICS_FEE;
-                        break;
-                    case CLOTHING:
-                        sale.EbayFeeRate = CLOTHING_FEE;
-                        break;
-                    case COLLECTIBLES:
-                        sale.EbayFeeRate = COLLECTIBLES_FEE;
-                        break;
-                    default:
-                        sale.EbayFeeRate = 0m;
-                        break;
-                }
-
+                sale.SetFeeRates(electronicsFee, clothingFee, collectiblesFee);
+                sale.SetFeeRate();
                 sale.Calculate();
                 WriteTransaction(sale);
-                lstOut.Items.Add("Category: " + sale.Category);
-                lstOut.Items.Add("eBay Store Fee: " + sale.EbayFeeRate.ToString("P"));
-                tabMain.SelectedTab = pgOutput;
             }
             else
             {
@@ -118,7 +168,7 @@ namespace LorenzoWatkins_EbaySalesApp_Project
                 outputFile = File.AppendText(fileName);
                 try
                 {
-                    outputFile.WriteLine(DateTime.Now.ToString());
+                    outputFile.WriteLine("Date and Time: " + DateTime.Now.ToString());
                     outputFile.WriteLine("----- New Transaction -----");
                     outputFile.WriteLine("Customer: " + sale.CustomerName);
                     outputFile.WriteLine("Category: " + sale.Category);
@@ -133,7 +183,12 @@ namespace LorenzoWatkins_EbaySalesApp_Project
                     outputFile.Close();
                 }
 
-                lstOut.Items.Add(sale.ToString());
+                lstOut.Items.Add("Customer: " + sale.CustomerName);
+                lstOut.Items.Add("Category: " + sale.Category);
+                lstOut.Items.Add("Sale Amount: " + sale.SaleAmount.ToString("C"));
+                lstOut.Items.Add("eBay Fee Rate: " + sale.EbayFeeRate.ToString("P"));
+                lstOut.Items.Add("eBay Fee: " + sale.EbayFee.ToString("C"));
+                lstOut.Items.Add("Seller Gets: " + sale.AmountSellerGets.ToString("C"));
             }
             catch (IOException)
             {

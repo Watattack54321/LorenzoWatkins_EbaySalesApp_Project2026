@@ -16,3 +16,66 @@ eBay Fee Rate: 12.90%
 eBay Fee: $64.50
 Seller Gets: $435.50
 
+11/18/2026 11:01:03 AM
+----- New Transaction -----
+Customer: EDP
+Category: Electronics
+Sale Amount: $500.00
+eBay Fee Rate: 12.00%
+eBay Fee: $60.00
+Seller Gets: $440.00
+
+Date and Time: 11/18/2026 11:12:55 AM
+----- New Transaction -----
+Customer: d,sn,snd
+Category: Electronics
+Sale Amount: $10.00
+eBay Fee Rate: 12.00%
+eBay Fee: $1.20
+Seller Gets: $8.80
+
+Date and Time: 11/18/2026 11:13:01 AM
+----- New Transaction -----
+Customer: d,sn,snd
+Category: Clothing
+Sale Amount: $10.00
+eBay Fee Rate: 10.00%
+eBay Fee: $1.00
+Seller Gets: $9.00
+
+Date and Time: 11/18/2026 11:13:06 AM
+----- New Transaction -----
+Customer: d,sn,snd
+Category: Collectibles
+Sale Amount: $10.00
+eBay Fee Rate: 8.00%
+eBay Fee: $0.80
+Seller Gets: $9.20
+
+Date and Time: 11/18/2026 11:19:38 AM
+----- New Transaction -----
+Customer: fdhdk;hg`
+Category: Electronics
+Sale Amount: $56.00
+eBay Fee Rate: 12.00%
+eBay Fee: $6.72
+Seller Gets: $49.28
+
+Date and Time: 11/18/2026 11:23:10 AM
+----- New Transaction -----
+Customer: EDP
+Category: Electronics
+Sale Amount: $56.00
+eBay Fee Rate: 12.00%
+eBay Fee: $6.72
+Seller Gets: $49.28
+
+Date and Time: 11/23/2026 10:05:34 AM
+----- New Transaction -----
+Customer: e
+Category: Electronics
+Sale Amount: $50.00
+eBay Fee Rate: 12.00%
+eBay Fee: $6.00
+Seller Gets: $44.00
+

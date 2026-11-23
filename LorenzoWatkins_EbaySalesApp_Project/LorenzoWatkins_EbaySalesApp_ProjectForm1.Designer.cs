@@ -28,32 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             txtProduct = new TextBox();
             txtPrice = new TextBox();
             btnCalc = new Button();
             lstOut = new ListBox();
             btnClear = new Button();
             btnQuit = new Button();
-            tabMain = new TabControl();
-            pgInputs = new TabPage();
             lblProduct = new Label();
             lblPrice = new Label();
             grpCategory = new GroupBox();
             rdoCollectibles = new RadioButton();
             rdoClothing = new RadioButton();
             rdoElectronics = new RadioButton();
-            pgOutput = new TabPage();
-            tabMain.SuspendLayout();
-            pgInputs.SuspendLayout();
+            openFileDialog1 = new OpenFileDialog();
+            components.Add(openFileDialog1);
             grpCategory.SuspendLayout();
-            pgOutput.SuspendLayout();
             SuspendLayout();
             // 
             // txtProduct
             // 
             txtProduct.Location = new Point(20, 20);
             txtProduct.Name = "txtProduct";
-            txtProduct.PlaceholderText = "Enter customer name";
+            txtProduct.PlaceholderText = "Enter customer name (Alt+C)";
             txtProduct.Size = new Size(300, 23);
             txtProduct.TabIndex = 1;
             txtProduct.GotFocus += textBox_GotFocus;
@@ -75,16 +72,16 @@
             btnCalc.Name = "btnCalc";
             btnCalc.Size = new Size(120, 30);
             btnCalc.TabIndex = 4;
-            btnCalc.Text = "Calculate Fees";
+            btnCalc.Text = "&Calculate Fees";
             btnCalc.UseVisualStyleBackColor = true;
             btnCalc.Click += btnCalc_Click;
             // 
             // lstOut
             // 
             lstOut.FormattingEnabled = true;
-            lstOut.Location = new Point(12, 12);
+            lstOut.Location = new Point(20, 215);
             lstOut.Name = "lstOut";
-            lstOut.Size = new Size(540, 319);
+            lstOut.Size = new Size(540, 145);
             lstOut.TabIndex = 10;
             // 
             // btnClear
@@ -93,7 +90,7 @@
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(77, 30);
             btnClear.TabIndex = 5;
-            btnClear.Text = "Clear";
+            btnClear.Text = "&Clear";
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click;
             // 
@@ -103,36 +100,19 @@
             btnQuit.Name = "btnQuit";
             btnQuit.Size = new Size(78, 30);
             btnQuit.TabIndex = 6;
-            btnQuit.Text = "Quit";
+            btnQuit.Text = "&Quit";
             btnQuit.UseVisualStyleBackColor = true;
             btnQuit.Click += btnQuit_Click;
             // 
-            // tabMain
-            // 
-            tabMain.Controls.Add(pgInputs);
-            tabMain.Controls.Add(pgOutput);
-            tabMain.Location = new Point(10, 10);
-            tabMain.Name = "tabMain";
-            tabMain.SelectedIndex = 0;
-            tabMain.Size = new Size(580, 380);
-            tabMain.TabIndex = 11;
-            // 
-            // pgInputs
-            // 
-            pgInputs.Controls.Add(lblProduct);
-            pgInputs.Controls.Add(txtProduct);
-            pgInputs.Controls.Add(lblPrice);
-            pgInputs.Controls.Add(txtPrice);
-            pgInputs.Controls.Add(btnCalc);
-            pgInputs.Controls.Add(btnClear);
-            pgInputs.Controls.Add(btnQuit);
-            pgInputs.Controls.Add(grpCategory);
-            pgInputs.Location = new Point(4, 24);
-            pgInputs.Name = "pgInputs";
-            pgInputs.Padding = new Padding(3);
-            pgInputs.Size = new Size(572, 352);
-            pgInputs.TabIndex = 0;
-            pgInputs.Text = "Inputs";
+            Controls.Add(lblProduct);
+            Controls.Add(txtProduct);
+            Controls.Add(lblPrice);
+            Controls.Add(txtPrice);
+            Controls.Add(btnCalc);
+            Controls.Add(btnClear);
+            Controls.Add(btnQuit);
+            Controls.Add(grpCategory);
+            Controls.Add(lstOut);
             // 
             // lblProduct
             // 
@@ -141,7 +121,7 @@
             lblProduct.Name = "lblProduct";
             lblProduct.Size = new Size(97, 15);
             lblProduct.TabIndex = 0;
-            lblProduct.Text = "Customer Name:";
+            lblProduct.Text = "&Customer Name:";
             // 
             // lblPrice
             // 
@@ -150,7 +130,7 @@
             lblPrice.Name = "lblPrice";
             lblPrice.Size = new Size(36, 15);
             lblPrice.TabIndex = 4;
-            lblPrice.Text = "Price:";
+            lblPrice.Text = "&Price:";
             // 
             // grpCategory
             // 
@@ -198,32 +178,25 @@
             rdoElectronics.UseVisualStyleBackColor = true;
             rdoElectronics.CheckedChanged += rdoElectronics_CheckedChanged;
             // 
-            // pgOutput
+            // openFileDialog1
             // 
-            pgOutput.Controls.Add(lstOut);
-            pgOutput.Location = new Point(4, 24);
-            pgOutput.Name = "pgOutput";
-            pgOutput.Padding = new Padding(3);
-            pgOutput.Size = new Size(572, 352);
-            pgOutput.TabIndex = 1;
-            pgOutput.Text = "Output";
+            openFileDialog1.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog1.Title = "Open eBay Fee Configuration File";
             // 
             // LorenzoWatkins_EbaySalesApp_ProjectForm1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(600, 400);
-            Controls.Add(tabMain);
             Name = "LorenzoWatkins_EbaySalesApp_ProjectForm1";
             Text = "EbaySalesApp";
+            AcceptButton = btnCalc;
+            CancelButton = btnQuit;
             Load += Form1_Load;
-            tabMain.ResumeLayout(false);
-            pgInputs.ResumeLayout(false);
-            pgInputs.PerformLayout();
             grpCategory.ResumeLayout(false);
             grpCategory.PerformLayout();
-            pgOutput.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -234,14 +207,12 @@
         private System.Windows.Forms.ListBox lstOut;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnQuit;
-        private System.Windows.Forms.TabControl tabMain;
-        private System.Windows.Forms.TabPage pgInputs;
-        private System.Windows.Forms.TabPage pgOutput;
         private System.Windows.Forms.Label lblProduct;
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.GroupBox grpCategory;
         private System.Windows.Forms.RadioButton rdoElectronics;
         private System.Windows.Forms.RadioButton rdoClothing;
         private System.Windows.Forms.RadioButton rdoCollectibles;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

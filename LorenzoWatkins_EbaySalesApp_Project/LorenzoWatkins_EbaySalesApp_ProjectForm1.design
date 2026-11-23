@@ -104,22 +104,10 @@
 
 	  <Control>
 		<Type>System.Windows.Forms.ListBox</Type>
-		<Name>lstbox1</Name>
+		<Name>lstOut</Name>
 		<Properties>
 		  <Property Name="Location" Type="System.Drawing.Point">340,20</Property>
 		  <Property Name="Size" Type="System.Drawing.Size">210,180</Property>
-		</Properties>
-	  </Control>
-
-	  <Control>
-		<Type>System.Windows.Forms.DataGridView</Type>
-		<Name>dataGridOutput</Name>
-		<Properties>
-		  <Property Name="Location" Type="System.Drawing.Point">20,20</Property>
-		  <Property Name="Size" Type="System.Drawing.Size">540,330</Property>
-		  <Property Name="AllowUserToAddRows">false</Property>
-		  <Property Name="ReadOnly">true</Property>
-		  <Property Name="RowHeadersVisible">false</Property>
 		</Properties>
 	  </Control>
 
